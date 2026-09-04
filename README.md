@@ -43,7 +43,7 @@ A C++ ATM terminal simulation implementing Abstract Data Type (ADT) Linked Lists
 
 
 ```
-atm_system/
+atm_system/`
 ├── config.h
 ├── account.h
 ├── accountstatus.h     
@@ -55,5 +55,5 @@ atm_system/
 ├── transactions.h
 ├── display.h
 ├── menu.h
-└── main.cpp
+└── main.cpp`
 
