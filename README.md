@@ -21,7 +21,7 @@ A C++ ATM terminal simulation implementing Abstract Data Type (ADT) Linked Lists
 
 ### Transaction Module
 * **Balance Inquiry:** Displays Account Number, Current Savings Balance, and Available Balance (calculating the 500 PHP maintaining balance threshold).
-* **Withdrawal (Savings, Checking, Fast Cash):** Validates sufficient funds before deduction. Prevents Savings withdrawals from dropping below the 500 PHP maintaining balance. Fast Cash provides rapid, pre-defined withdrawal amounts.
+* **Withdrawal (Savings, Checking, Fast Cash):** Validates sufficient funds before deduction. Prevents Savings withdrawals from dropping below the 5,000 PHP maintaining balance. Fast Cash provides rapid, pre-defined withdrawal amounts.
 * **Deposit (Savings & Current):** Directs deposited funds to the user's selected account type.
 * **Fund Transfer:** 
   * Validates destination account existence via Linked List traversal.
