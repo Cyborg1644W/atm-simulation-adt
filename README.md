@@ -38,5 +38,5 @@ A C++ ATM terminal simulation implementing Abstract Data Type (ADT) Linked Lists
 
 1. Clone the repository to your local machine:
   ```bash
-   git clone [https://github.com/YourUsername/atm-simulation-adt-cpp.git](https://github.com/YourUsername/atm-simulation-adt-cpp.git)
+   git clone [https://github.com/Cyborg1644W/atm-simulation-adt-cpp.git](https://github.com/YourUsername/atm-simulation-adt-cpp.git)
    cd atm-simulation-adt-cpp
