@@ -2,7 +2,7 @@
 #define ACCOUNTSTATUS_H
 
 #include <iostream> 
-#include "account.h"
+#include "Account.h"
 
 bool isLocked(const Account& acc){
     if(acc.status == AccountStatus::LOCKED){
