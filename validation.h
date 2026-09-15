@@ -7,7 +7,6 @@
 #include "security.h"
 #include "config.h"
 
-
 bool isValidDeposit(double amount){
     return amount >= MIN_DEPOSIT;  // if the amount is below or above 
 }
@@ -34,9 +33,18 @@ bool hasSufficientBalance(Account& acc, double amount, AccountType type) {
 bool isValidPinFormat(std::string& input) {
     // TODO: Implement length (4-6) and digit-only check
 
-    if (input.length() < 4 ||input.length() > 6  ){}
+    if (input.length() == 4 ||input.length() == 6  ){
+        return true; 
+    } else return false; 
 
-    return false;
+    for (char ch : input) {
+        if (!std::isdigit(static_cast<unsigned char>(ch))) {
+            return false;
+        }
+    }
+    return true;
+
+    
 }
 
 bool isValidPinFormat(const std::string& input) {
