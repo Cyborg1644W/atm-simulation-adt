@@ -7,3 +7,6 @@ Security
 TESTSECURITY
 *.o
 *.out
+TESTACCOUNT
+testacc
+FETCH_HEAD
