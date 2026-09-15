@@ -7,10 +7,8 @@
 #include "security.h"
 #include "config.h"
 
-
 bool isValidDeposit(double amount){
     return amount >= MIN_DEPOSIT; 
 }
-
 
 #endif
