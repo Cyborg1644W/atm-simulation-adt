@@ -1,5 +1,6 @@
 #include <iostream> 
 #include <string> 
+#include "Account.h"
 
 enum class TransactionStatus{
     SUCCESS,
@@ -13,6 +14,10 @@ enum class TransactionStatus{
     ACCOUNT_LOCKED,
     ACCOUNT_TERMINATED
 };
+
+BalanceInquiry getBalance(Account& acc) { //used for receipt, balance checking and etc. 
+    return { acc.savings, acc.current };
+}
 
 
 
