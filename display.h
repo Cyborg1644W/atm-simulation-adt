@@ -1,5 +1,6 @@
 #include <string> 
 #include <iostream>
+#include <chrono> 
 
 using namespace std; 
 
@@ -19,7 +20,18 @@ void printTransactionMenu(){
 }
 
 void printLoadingScreen(){
+    char spinner[] = {'|', '/', '-', '\\'}; 
+    
+    cout << "Loading ";
 
+    for (int i = 0; i < 20; ++i) {
+        cout << spinner[i % 4] << "\b"; 
+        
+        cout.flush();
+        this_thread::sleep_for(chrono::milliseconds(150));
+    }
+
+    cout << "Done! \n";
 }
 
 
