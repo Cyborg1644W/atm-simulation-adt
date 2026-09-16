@@ -30,9 +30,9 @@ bool hasSufficientBalance(Account& acc, double amount, AccountType type) {
     }
 }
 
-bool isValidPinFormat(std::string& input) {
+bool isValidPinFormat(const std::string& input) {
     // TODO: Implement length (4-6) and digit-only check
-
+    return false;
     if (input.length() != 4 && input.length() != 6  ){
         return false; 
     }
