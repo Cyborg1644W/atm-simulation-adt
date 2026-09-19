@@ -41,8 +41,8 @@ A C++ ATM terminal simulation implementing Abstract Data Type (ADT) Linked Lists
       rm -rf atm-simulation-adt
       git clone https://github.com/Cyborg1644W/atm-simulation-adt.git
       cd atm-simulation-adt
-
 ```
+
 
 ## File Structure
 ```
@@ -53,7 +53,6 @@ atm_system/
 ├── validation.h
 ├── security.h
 ├── persistence.h
-├── session.h
 ├── auth.h
 ├── transactions.h
 ├── display.h
