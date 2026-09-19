@@ -197,7 +197,13 @@
 // }
 
 #include <iostream>
+<<<<<<< HEAD
+#include <thread>
+#include <chrono>
+<<<<<<< Updated upstream
+=======
 #include <string>
+>>>>>>> main
 #include <iomanip>
 #include <cctype>
 
@@ -262,6 +268,70 @@ inline void drawBalanceInquiryBox(const string& accountNumber) {
     cout << "|      +-----------------------------------------+      |\n";
 }
 
+<<<<<<< HEAD
+int main(){
+    withCard();
+=======
+#include "display.h"
+
+using namespace std;
+
+int main() {
+    cout << "Testing Display Functions...\n\n";
+
+    // 1. Main Menu
+    cout << "\n--- Main Menu ---\n";
+    printMainMenu();
+
+    // 2. Transaction Menu
+    cout << "\n--- Transaction Menu ---\n";
+    printTransactionMenu();
+
+    // 3. Balance Inquiry Menu
+    cout << "\n--- Balance Inquiry Menu ---\n";
+    printBalanceInquiryMenu();
+
+    // 4. Balance Inquiry Output
+    cout << "\n--- Balance Inquiry Screen ---\n";
+    Account dummyAcc;
+    dummyAcc.accNumber = 12345;
+    dummyAcc.savings = 5000.0;
+    dummyAcc.checking = 1500.0;
+    printBalanceInquiry(dummyAcc);
+
+    // 5. Deposit Menu
+    cout << "\n--- Deposit Menu ---\n";
+    printDepositMenu();
+
+    // 6. Deposit Action
+    cout << "\n--- Deposit Action Screen ---\n";
+    printDeposit();
+
+    // 7. Withdraw Menu
+    cout << "\n--- Withdraw Menu ---\n";
+    printWithdrawMenu();
+
+    // 8. Fund Transfer
+    cout << "\n--- Fund Transfer Menu ---\n";
+    printFundTransferMenu();
+    cout << "\n--- Fund Transfer Form ---\n";
+    printFundTransfer();
+
+    // 9. Change PIN
+    cout << "\n--- Change PIN Enter ---\n";
+    printChangePinEnter();
+    cout << "\n--- Change PIN Confirmation ---\n";
+    printChangePinConfirmation();
+
+    // 10. Result Screens
+    cout << "\n--- Success Result ---\n";
+    printResult1(TransactionStatus::SUCCESS);
+
+    cout << "\n--- Insufficient Funds Result ---\n";
+    printResult1(TransactionStatus::INSUFFICIENT_FUNDS);
+
+>>>>>>> Stashed changes
+=======
 inline string getBoxInputInteractive() {
     string input = "";
     char ch;
@@ -296,5 +366,6 @@ int main() {
 
     cout << "\n[System] Captured Account Number: " << capturedAccountNo << endl;
 
+>>>>>>> main
     return 0;
 }
