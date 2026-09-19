@@ -20,7 +20,9 @@ enum class TransactionStatus{
     PIN_REUSED,
     CANCELLED,
     ACCOUNT_LOCKED,
-    ACCOUNT_TERMINATED
+    ACCOUNT_TERMINATED,
+    REGISTRATION_SUCCESS,
+    CARD_ALREADY_LINKED
 };
 
 BalanceInquiry getBalance(Account& acc) { //used for receipt, balance checking and etc. 
