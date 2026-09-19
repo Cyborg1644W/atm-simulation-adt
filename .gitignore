@@ -11,3 +11,11 @@ TESTACCOUNT
 testacc
 FETCH_HEAD
 *.exe
+TESTSECURITY
+TESTDISPLAY
+account
+auth
+auth.h.pch
+*.pch
+*.o
+
