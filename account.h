@@ -1,3 +1,16 @@
+#include <iostream> 
+#include <string> 
+
+enum class AccountStatus{
+    ACTIVE, 
+    LOCKED, 
+    TERMINATED
+}; 
+
+struct Account{
+    string accountNumber;
+    double savingsBalance;
+    double currentBalance;
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 #include <cstdlib>
