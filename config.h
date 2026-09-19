@@ -1,3 +1,6 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
 #include <string>
 
 const double MIN_DEPOSIT = 5000.0; 
@@ -10,3 +13,7 @@ const int STARTING_ACCOUNT_NUMBER = 1000;
 
 const std::string CANCEL = "0"; 
 const std::string ACCOUNT_FILE = "text.txt";  
+const std::string USB_CARD_PATH = "D:\\bastion_card.dat"; 
+enum class AccountType { SAVINGS, CHECKING };
+
+#endif
