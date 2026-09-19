@@ -35,7 +35,7 @@ AuthStatus registerAccount(AccountList &list,
 
     unsigned long hashedPin = SecurityManager::hashPin(pin);
     int accountNum = list.generateAccountNumber();
-    Account newAcc(accountNum, firstName, lastName, birthday, contact, initialDeposit, 0, hashedPin, 0);
+    Account newAcc(accountNum, firstName, lastName, birthday, contact, initialDeposit, 0, hashedPin, ACTIVE);
     list.insertAccount(&newAcc);
 
     return AuthStatus::SUCCESS;

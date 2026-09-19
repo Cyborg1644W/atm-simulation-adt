@@ -70,7 +70,16 @@ bool isPinReused(const std::string& newPin, const Account& acc) {
 }
 
 bool isStrongPin(const std::string& pin) {
-    // Stub - will fail until implemented
+    if (pin.empty()) {
+        return false;
+    }
+
+    for (char c : pin) {
+        if (c != pin[0]) {
+            return true;
+        }
+    }
+
     return false;
 }
 
@@ -150,9 +159,11 @@ int main() {
     if (isPinReused("1234", acc))   cout << "Reused PIN (1234): PASS" << endl; else cout << "FAIL" << endl;
     if (!isPinReused("5678", acc))  cout << "New unique PIN (5678): PASS" << endl; else cout << "FAIL" << endl;
 
-    cout << "\n=== 5. TESTING isStrongPin (UNIMPLEMENTED) ===" << endl;
+    cout << "\n=== 5. TESTING isStrongPin ===" << endl;
     if (!isStrongPin("1111")) cout << "Reject repeated '1111': PASS" << endl; 
     else                      cout << "Reject repeated '1111': FAIL (Need implementation)" << endl;
+    if (isStrongPin("1234"))  cout << "Accept mixed digits '1234': PASS" << endl;
+    else                      cout << "Accept mixed digits '1234': FAIL" << endl;
 
     cout << "\n=== 6. TESTING isValidName ===" << endl;
     if (isValidName("John Doe"))   cout << "Space separated name: PASS" << endl; else cout << "FAIL" << endl;

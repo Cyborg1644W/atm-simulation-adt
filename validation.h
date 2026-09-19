@@ -55,7 +55,15 @@ bool isPinReused(const std::string& newPin, const Account& acc) {
 }
 
 bool isStrongPin(const std::string& pin) {
-    // TODO: Reject pins where all digits are the same (e.g., "1111")
+    if (pin.empty()) {
+        return false;
+    }
+
+    for (char c : pin) {
+        if (c != pin[0]) {
+            return true;
+        }
+    }
 
     return false;
 }
