@@ -18,9 +18,9 @@ bool hasSufficientBalance(Account& acc, double amount, AccountType type) {
 
     double current = 0.0;
     if (type == AccountType::SAVINGS) { // if savings acc or current
-        current = acc.savingsBalance;
+        current = acc.savings;
     } else {
-        current = acc.currentBalance;
+        current = acc.checking;
     }
 
     if ((current - amount) >= MAINTAINING_BALANCE) { // if above or below maintaining balance
@@ -32,7 +32,6 @@ bool hasSufficientBalance(Account& acc, double amount, AccountType type) {
 
 bool isValidPinFormat(const std::string& input) {
     // TODO: Implement length (4-6) and digit-only check
-    return false;
     if (input.length() != 4 && input.length() != 6  ){
         return false; 
     }
@@ -47,7 +46,7 @@ bool isValidPinFormat(const std::string& input) {
 
 bool isPinReused(const std::string& newPin, const Account& acc) {
     // TODO: Hash newPin and compare it to acc.pinHash
-    string hashedInput = hashPin(newPin); 
+    unsigned long hashedInput = SecurityManager::hashPin(newPin); 
 
     if(hashedInput == acc.pinHash){
         return true; 

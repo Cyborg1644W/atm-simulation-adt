@@ -1,7 +1,6 @@
 #ifndef ACCOUNTSTATUS_H
 #define ACCOUNTSTATUS_H
 
-#include <iostream> 
 #include "account.h"
 
 bool isLocked(const Account& acc){
@@ -20,40 +19,12 @@ bool isTerminated(const Account& acc){
     }
 }
 
-bool isActive(const Account& acc){
-    if(acc.status == AccountStatus::ACTIVE){
-        return true;
-    } else {
-        return false;
-    }
+void lockAccount(Account& acc){
+    acc.status = AccountStatus::LOCKED;
 }
 
-bool lockAccount(const Account& acc){
-    if(acc.status == AccountStatus::LOCKED){
-        return true;
-    } else {
-        return false;
-    }
+void terminateAccount(Account& acc){
+    acc.status = AccountStatus::TERMINATED;
 }
 
-bool terminateAccount(const Account& acc){
-    if(acc.status == AccountStatus::TERMINATED){
-        return true;
-    } else {
-        return false;
-    }
-}
-
-bool canProceed(const Account& acc){
-    if(acc.status == AccountStatus::TERMINATED){
-        std::cout << "Access Denied. This account has been terminated"; 
-        return false;
-    }
-
-    if(acc.status == AccountStatus::LOCKED){
-        std::cout << "Access Denied. This account is locked"; 
-        return false; 
-    }
-}
-
-#endif 
+#endif
