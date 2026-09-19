@@ -17,6 +17,8 @@ struct Account {
     int status;
     int failedAttempts;
 
+    Account() : accNumber(0), savings(0.0), checking(0.0), pinHash(0), status(0), failedAttempts(0) {}
+
     Account(int accNum, std::string fName, std::string lName,
             std::string bday, std::string contactNum, double sav,
             double chk, unsigned long hash, int stat)
