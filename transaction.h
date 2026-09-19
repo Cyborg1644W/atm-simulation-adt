@@ -86,14 +86,34 @@ inline TransactionStatus deposit(Account& acc, double amount, AccountType type) 
 }
 
 // 4. Fund Transfer
-inline TransactionStatus transfer(Account& senderAcc, long recipientAccNum, std::string recipientName, double amount, std::string pin) {
+inline TransactionStatus transfertransfer(Account& senderAcc, AccountList& db, int recipientAccNum, std::string recipientName, double amount, std::string pin) {
     // TODO: Check cancel sentinel at each input step
+    if (recipientAccNum == 0 || amount <= 0 || pin == "0") {
+        return TransactionStatus::CANCELLED;
+    }
+    //TODO: Prevent transfer to own account number
+    if (senderAcc.accNumber == recipientAccNum) {
+        return TransactionStatus::FAILED; 
+    }
 
     // TODO: Search recipient via account.h (return RECIPIENT_NOT_FOUND if missing)
+    Account* recipient = db.findByAccountNumber(recipientAccNum);
+
     // TODO: Optionally verify recipient name matches
+    if (recipient == NULL) {
+        return TransactionStatus::RECIPIENT_NOT_FOUND;
+    }
     // TODO: Verify sender PIN via security.h
+    if (SecurityManager::verifyPin(pin, senderAcc.pinHash) == false) {
+        return TransactionStatus::INVALID_PIN;
+    }
     // TODO: Validate sender has sufficient balance
+    if (hasSufficientBalance(senderAcc, amount, AccountType::SAVINGS) == false) {
+        return TransactionStatus::INSUFFICIENT_FUNDS;
+    }
     // TODO: Mutate both nodes' balances
+    senderAcc.savings -= amount;
+    recipient->savings += amount;
     
     return TransactionStatus::SUCCESS; // Change based on result
 }
