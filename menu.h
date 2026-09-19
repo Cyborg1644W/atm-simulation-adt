@@ -1,143 +1,142 @@
+#ifndef MENU_H
+#define MENU_H
+
 #include "auth.h"
 #include "display.h"
-#include "session.h"
 #include "accountstatus.h"
 #include "transaction.h"
 #include "config.h" 
 #include <iostream>
 
+void transactionMenu(Account* currentAccount);
+
 void mainMenu() {
     bool running = true;
-
     int choice; 
+    
+    Account* currentAccount = NULL; 
 
     while (running) {
             printMainMenu(); 
-            std::cout << "Input: " << std::endl; 
-            std::cin >> choice; 
 
-            if (choice == 1){
+            if (AccountList::findByAccountNumber(int accNum) == NULL){
                 registerAccount();
             } 
-            else if (choice == 2){
-                bool loginSuccess = login();
 
-                if(loginSuccess == true){
-                    transactionMenu();
+            else {
+                currentAccount = authenticateUser();
+
+                if(currentAccount != NULL){
+
+                    transactionMenu(currentAccount);
+                    
+                    currentAccount = NULL; 
                 } 
             } 
-            else if (choice == 3){
-                running = false;
-            }
-            else{
-                std::cout << "Invalid Input" << std::endl; 
-            }
     }
 }
 
-void transactionMenu() {
-    Account* currentAcc = getActiveAccount(); // from session.h
-
-    if(isSessionActive() == false){ //session.h 
+void transactionMenu(Account* currentAccount) {
+    if(currentAccount == NULL){ 
         std::cout << "Error: No Active Session Found" << std::endl;   
         return ; 
     }
-    else if(canProceed(*currentAcc) == false){ //accountstatus.h 
+    else if(canProceed(*currentAccount) == false){ 
         std::cout << "Access Denied. Your account is locked or terminated" << std::endl; 
         return; 
     }
 
     bool anotherTransaction = true;
 
-    // TODO: Outer loop for "another transaction?"
     while (anotherTransaction) {
-        int choice; 
+        char choice; 
         TransactionStatus status; 
 
         printTransactionMenu(); 
         std::cin >> choice; 
 
-        switch(choice){ //placeholder for now (arguments)
+        switch(choice){ 
             case 1: {
-            printBalanceInquiry(); 
-            status = getBalance(*currentAcc);
-            printResult(status);
+                printBalanceInquiry(); 
+                status = getBalance(*currentAccount);
+                printResult(status);
 
-            if (status == TransactionStatus::CANCELLED) {
-                std::cout << "Transaction cancelled. No changes were committed." << std::endl;
-                continue; 
-            }    
+                if (status == TransactionStatus::CANCELLED) {
+                    std::cout << "Transaction cancelled. No changes were committed." << std::endl;
+                    continue; 
+                }    
 
-            anotherTransaction = askAnotherTransaction();
-            break; 
+                anotherTransaction = askAnotherTransaction();
+                break; 
             }
 
             case 2: {
-            printWithdraw(); 
-            status = withdraw(*currentAcc);
-            printResult(status);
+                printWithdraw(); 
+                status = withdraw(*currentAccount);
+                printResult(status);
 
-            if (status == TransactionStatus::CANCELLED) {
-                std::cout << "Transaction cancelled. No changes were committed." << std::endl;
-                continue; 
-            }       
+                if (status == TransactionStatus::CANCELLED) {
+                    std::cout << "Transaction cancelled. No changes were committed." << std::endl;
+                    continue; 
+                }       
 
-            anotherTransaction = askAnotherTransaction();
-            break; 
+                anotherTransaction = askAnotherTransaction();
+                break; 
             }
 
             case 3: {
-            printDeposit(); 
-            status = deposit(*currentAcc);
-            printResult(status);
+                printDeposit(); 
+                status = deposit(*currentAccount);
+                printResult(status);
 
-            if (status == TransactionStatus::CANCELLED) {
-                std::cout << "Transaction cancelled. No changes were committed." << std::endl;
-                continue; 
-            }    
+                if (status == TransactionStatus::CANCELLED) {
+                    std::cout << "Transaction cancelled. No changes were committed." << std::endl;
+                    continue; 
+                }    
 
-            anotherTransaction = askAnotherTransaction();
-            break;
+                anotherTransaction = askAnotherTransaction();
+                break;
             }
 
             case 4: {
-            printFundTransfer(); 
-            status = fundTransfer(*currentAcc);
-            printResult(status);
+                printFundTransfer(); 
+                status = fundTransfer(*currentAccount);
+                printResult(status);
 
-            if (status == TransactionStatus::CANCELLED) {
-                std::cout << "Transaction cancelled. No changes were committed." << std::endl;
-                continue; 
-            }    
+                if (status == TransactionStatus::CANCELLED) {
+                    std::cout << "Transaction cancelled. No changes were committed." << std::endl;
+                    continue; 
+                }    
 
-            anotherTransaction = askAnotherTransaction();
-            break; 
+                anotherTransaction = askAnotherTransaction();
+                break; 
             }
 
             case 5: {
-            printChangePinCode(); 
-            status = changePinCode(*currentAcc);
-            printResult(status);
+                printChangePinCode(); 
+                status = changePinCode(*currentAccount);
+                printResult(status);
 
-            if (status == TransactionStatus::CANCELLED) {
-                std::cout << "Transaction cancelled. No changes were committed." << std::endl;
-                continue; 
-            }    
+                if (status == TransactionStatus::CANCELLED) {
+                    std::cout << "Transaction cancelled. No changes were committed." << std::endl;
+                    continue; 
+                }    
 
-            anotherTransaction = askAnotherTransaction();
-            break;
+                anotherTransaction = askAnotherTransaction();
+                break;
             }
 
             case 6: {
-            anotherTransaction = false; 
-            break;
+                anotherTransaction = false; 
+                break;
             }
 
-            default: 
-            std::cout << "Invalid choice" << std::endl;
-            break; 
+            default: {
+                std::cout << "Invalid choice" << std::endl;
+                break; 
+            }
         }
     }
-    endSession(); //session.h
 }
 
+#endif
