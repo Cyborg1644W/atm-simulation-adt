@@ -1,6 +1,14 @@
+#ifndef TRANSACTION_H
+#define TRANSACTION_H
+
 #include <iostream> 
 #include <string> 
-#include "Account.h"
+#include "account.h"
+
+struct BalanceInquiry {
+    double savings;
+    double checking;
+};
 
 enum class TransactionStatus{
     SUCCESS,
@@ -16,8 +24,8 @@ enum class TransactionStatus{
 };
 
 BalanceInquiry getBalance(Account& acc) { //used for receipt, balance checking and etc. 
-    return { acc.savings, acc.current };
+    return { acc.savings, acc.checking };
 }
 
-
+#endif
 

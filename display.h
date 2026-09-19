@@ -1,13 +1,54 @@
 #include <string> 
 #include <iostream>
 #include <chrono> 
+<<<<<<< Updated upstream
+=======
+#include <thread>
+#include <iomanip>
+#include "transaction.h"
+>>>>>>> Stashed changes
 
 using namespace std; 
 
 char ifcontinue; 
 
+void head();
+void withCard();
+void withoutCard();
+void printMainMenu1();
+void printMainMenu2();
+void enterPinCode1();
+void printTransactionMenu1();
+void printBalanceInquiryMenu1();
+void printBalanceInquiry1(Account waw);
+void printDepositMenu1();
+void printEnterAmount();
+void printWithdrawMenu1();
+void printFundTransferMenu1();
+void printFundTransfer1();
+void printChangePinCode1();
+void printResult1(TransactionStatus status);
+bool askAnotherTransaction();
+void printMainMenuInsertCard();
+
 void printMainMenu(){
 
+<<<<<<< Updated upstream
+=======
+void printMainMenuInsertCard(){
+    printMainMenu1();
+    std::this_thread::sleep_for(std::chrono::milliseconds(750));
+    std::system("clear");
+    printMainMenu2();
+    std::this_thread::sleep_for(std::chrono::milliseconds(750));
+    std::system("clear");
+}
+
+void printEnterPinCode(){
+    head();
+    enterPinCode1();
+    withCard();
+>>>>>>> Stashed changes
 }
 
 void printTransactionMenu(){
@@ -19,7 +60,84 @@ void printTransactionMenu(){
     std::cout << "[0] Exit" << std::endl;
 }
 
+<<<<<<< Updated upstream
 void printLoadingScreen(){
+=======
+void printBalanceInquiryMenu(){
+    head();
+    printBalanceInquiryMenu1();
+    withCard();
+}
+
+void printBalanceInquiry(Account acc){
+    head();
+    printBalanceInquiry1(acc);
+    withCard();
+}
+
+void printDepositMenu(){
+    head();
+    printDepositMenu1();
+    withCard();
+}
+
+void printDeposit(){
+    head();
+    printEnterAmount();
+    withCard();
+}
+
+void printWithdrawMenu(){
+    head();
+    printWithdrawMenu1();
+    withCard();
+}
+
+void printWithdraw(){
+    head();
+    printEnterAmount();
+    withCard();
+}
+
+void printFundTransferMenu(){
+    head();
+    printFundTransferMenu1();
+    withCard();
+}
+
+void printFundTransfer(){
+    head();
+    printFundTransfer1();
+    withCard();
+}
+
+void printChangePinEnter(){
+    head();
+    printEnterPinCode();
+    withCard();
+}
+
+void printChangePinConfirmation(){
+    head();
+    printChangePinCode1(); 
+    withCard();
+}
+
+void printResult(TransactionStatus status){
+    head();
+    printResult1(status);
+    askAnotherTransaction();
+    withCard();
+}
+
+string printMaskedInput() { // simplified
+    std::string pin = "";
+    std::cin >> pin;
+    return pin;
+}
+
+void printLoadingScreen(){ // Rework
+>>>>>>> Stashed changes
     char spinner[] = {'|', '/', '-', '\\'}; 
     
     cout << "Loading ";
@@ -265,6 +383,7 @@ void printDeposit(){
     cout << "+=======================================================+" << endl;
 }
 
+<<<<<<< Updated upstream
 void printFundTransfer(){
     cout << "+=======================================================+" << endl;
     cout << "|                                                       |" << endl;
@@ -300,6 +419,21 @@ void printFundTransfer(){
     cout << "|           |======================|                    |" << endl;
     cout << "|           '----------------------'                    |" << endl;
     cout << "+=======================================================+" << endl;
+=======
+void printBalanceInquiry1(Account waw){// Done lagay account variable 
+    std::cout << "|      +-----------------------------------------+      |" << std::endl;
+    std::cout << "|      |             BALANCE INQUIRY             |      |" << std::endl;
+    std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|      | Account No.: " << std::left << std::setw(25) << waw.accNumber << "|      |" << std::endl;
+    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|      | Current Savings: " << std::left << std::setw(21) << waw.savings << "|      |" << std::endl;
+    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|      | Available: " << std::left << std::setw(27) << waw.savings << "|      |" << std::endl;
+    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|      +-----------------------------------------+      |" << std::endl;
+>>>>>>> Stashed changes
 }
 
 void printChangePinCode(){
@@ -345,11 +479,23 @@ bool askAnotherTransaction(){
     std::cout << "[n] No" << std::endl;
     std::cin >> ifcontinue; 
 
+<<<<<<< Updated upstream
     if(ifcontinue == 'y'){
         return true;
     } 
     else {
         return false; 
+=======
+    while (true) {
+        std::cin >> ifcontinue;
+        if (ifcontinue == '7') {
+            return true;
+        } else if (ifcontinue == '8') { 
+            return false; 
+        } else {
+            std::cout << "Invalid input. Please press 7 for YES or 8 for NO: ";
+        }
+>>>>>>> Stashed changes
     }
 }
 
