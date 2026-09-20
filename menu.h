@@ -5,46 +5,145 @@
 #include "display.h"
 #include "accountstatus.h"
 #include "transaction.h"
-#include "config.h" 
-#include <iostream>
-
+#include "persistence.h"
+#include "config.h"
 #include <iostream>
 #include <fstream>
 
 void transactionMenu(Account* currentAccount, AccountList& list);
 
 void mainMenu(AccountList& list) {
-    bool running = true;
-    Account* currentAccount = NULL; 
+    while (true) {
+        Account* currentAccount = NULL;
 
-    while (running) {
-        printMainMenu(); 
-        
-        // Simulating the user pressing ENTER to insert card
-        std::string dummy = getRealTimeInput([](const std::string& input){}, false);
-        
-        std::ifstream cardFile(USB_CARD_PATH);
-        if (cardFile.good()) {
-            // File exists - simulate reading account from USB and auto-login
-            std::cout << "\nUSB Card detected! Reading account...\n";
-            SLEEP_MS(1500);
-            
-            // For now, we mock the authentication since we just want to jump to the transaction menu
-            // In a real scenario, we'd read the account number from the file.
-            currentAccount = list.findByAccountNumber(12345); // Dummy account from test
-            if (currentAccount != NULL) {
-                transactionMenu(currentAccount, list);
-            } else {
-                std::cout << "Account from card not found in database.\n";
-                SLEEP_MS(2000);
+        // --- WAIT FOR CARD ---
+        // Keep showing "Please insert card" until pin.code file is found
+        while (true) {
+            CLEAR_SCREEN();
+            head();
+            printMainMenu1();
+            withoutCard();
+            std::cout << "Please insert your ATM card (press ENTER to check)..." << std::endl;
+            std::cin.ignore();
+
+            std::ifstream cardFile(CARD_FILE_PATH);
+            if (cardFile.good()) {
+                cardFile.close();
+                break;  // Card found — exit the wait loop
             }
-        } else {
-            // No file - proceed to registration
-            std::cout << "\nNo card file found. Redirecting to new user registration...\n";
+            // No card found — loop again and show message
+            CLEAR_SCREEN();
+            head();
+            printMainMenu2();
+            withoutCard();
+            std::cout << "No card detected. Please insert your ATM card." << std::endl;
             SLEEP_MS(2000);
-            
-            // Call registration flow (stubbed for now)
-            // registerAccount(...);
+        }
+
+        // --- CARD DETECTED ---
+        // Check if this card already has an account (has a valid accNumber inside)
+        int cardAccNum = 0;
+        unsigned long cardPinHash = 0;
+        bool cardHasAccount = readCardFile(cardAccNum, cardPinHash)
+                              && list.findByAccountNumber(cardAccNum) != NULL;
+
+        if (!cardHasAccount) {
+            // --- NEW CARD: REGISTRATION ---
+            CLEAR_SCREEN();
+            head();
+            std::cout << "|      NEW CARD DETECTED — REGISTRATION                  |" << std::endl;
+            withoutCard();
+
+            std::string firstName, lastName, birthday, contact, pin, confirmPin;
+            double deposit = 0;
+
+            std::cout << "First Name   : "; std::cin >> firstName;
+            std::cout << "Last Name    : "; std::cin >> lastName;
+            std::cout << "Birthday (MM/DD/YY): "; std::cin >> birthday;
+            std::cout << "Contact No.  : "; std::cin >> contact;
+            std::cout << "Initial Deposit (min 5000): "; std::cin >> deposit;
+            std::cout << "PIN (4-6 digits): ";
+            pin = getRealTimeInput([](const std::string& s){
+                std::cout << "PIN (4-6 digits): " << s;
+            }, true);
+            std::cout << "Confirm PIN  : ";
+            confirmPin = getRealTimeInput([](const std::string& s){
+                std::cout << "Confirm PIN  : " << s;
+            }, true);
+
+            if (pin != confirmPin) {
+                std::cout << "\nPINs do not match. Please try again." << std::endl;
+                SLEEP_MS(2000);
+                continue;
+            }
+
+            AuthStatus result = registerAccount(list, firstName, lastName, birthday, contact, deposit, pin);
+
+            CLEAR_SCREEN();
+            head();
+            if (result == AuthStatus::SUCCESS) {
+                // Find the newly created account to show the number
+                int newNum = 0;
+                unsigned long newHash = 0;
+                readCardFile(newNum, newHash);
+                std::cout << "|  Registration successful!                             |" << std::endl;
+                std::cout << "|  Your Account Number: " << newNum << std::string(29, ' ') << "|" << std::endl;
+                std::cout << "|  Your card (pin.code) has been written.               |" << std::endl;
+                saveAccounts(list);
+            } else if (result == AuthStatus::CARD_ALREADY_LINKED) {
+                std::cout << "|  This card already has an account linked.             |" << std::endl;
+            } else if (result == AuthStatus::INVALID_PIN_FORMAT) {
+                std::cout << "|  Invalid PIN format (must be 4-6 digits).             |" << std::endl;
+            } else if (result == AuthStatus::INVALID_DEPOSIT) {
+                std::cout << "|  Initial deposit must be at least 5000.               |" << std::endl;
+            } else {
+                std::cout << "|  Registration failed. Please check your details.      |" << std::endl;
+            }
+            withoutCard();
+            SLEEP_MS(3000);
+
+        } else {
+            // --- EXISTING CARD: LOGIN ---
+            int attempts = 0;
+            bool loggedIn = false;
+
+            while (attempts < MAX_LOGIN_ATTEMPTS && !loggedIn) {
+                std::string pin = getRealTimeInput([&](const std::string& input){
+                    CLEAR_SCREEN();
+                    printEnterPinCode(input);
+                }, true);
+
+                if (pin == CANCEL) break;
+
+                AuthStatus result = login(list, pin, currentAccount);
+
+                if (result == AuthStatus::SUCCESS) {
+                    loggedIn = true;
+                } else if (result == AuthStatus::ACCOUNT_LOCKED) {
+                    CLEAR_SCREEN();
+                    head();
+                    std::cout << "|  Account locked after too many failed attempts.       |" << std::endl;
+                    withCard();
+                    SLEEP_MS(3000);
+                    saveAccounts(list);
+                    break;
+                } else {
+                    // Wrong PIN
+                    attempts++;
+                    CLEAR_SCREEN();
+                    head();
+                    std::cout << "|  Incorrect PIN. Attempts left: "
+                              << (MAX_LOGIN_ATTEMPTS - attempts)
+                              << std::string(20, ' ') << "|" << std::endl;
+                    withCard();
+                    SLEEP_MS(2000);
+                }
+            }
+
+            if (loggedIn && currentAccount != NULL) {
+                transactionMenu(currentAccount, list);
+                saveAccounts(list);  // Save after every session
+            }
         }
     }
 }

@@ -1,31 +1,14 @@
 #include <iostream>
 #include "account.h"
+#include "persistence.h"
+#include "menu.h"
 
 int main() {
-    AccountList accounts;
+    AccountList list;
+    loadAccounts(list);
 
-    Account demoAccount(
-        accounts.generateAccountNumber(),
-        "Demo",
-        "User",
-        "01/01/00",
-        "09171234567",
-        5000.0,
-        0.0,
-        0,
-        ACTIVE
-    );
-
-    accounts.insertAccount(&demoAccount);
-
-    Account *found = accounts.findByAccountNumber(demoAccount.accNumber);
-    if (found == NULL) {
-        std::cout << "Account insert failed.\n";
-        return 1;
-    }
-
-    std::cout << "Created account " << found->accNumber << " for "
-              << found->firstName << " " << found->lastName << ".\n";
-
+    mainMenu(list);
+    saveAccounts(list);
+    
     return 0;
 }

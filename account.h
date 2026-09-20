@@ -46,6 +46,7 @@ public:
     void insertAccount(Account *newAcc);
     Account *findByAccountNumber(int accNum);
     int generateAccountNumber();
+    Node* getHead() { return head; }
 };
 
 void AccountList::insertAccount(Account *newAcc) {

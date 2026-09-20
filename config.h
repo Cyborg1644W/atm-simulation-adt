@@ -12,8 +12,15 @@ const int PIN_MAX_LENGTH = 6;
 const int STARTING_ACCOUNT_NUMBER = 1000; 
 
 const std::string CANCEL = "0"; 
-const std::string ACCOUNT_FILE = "text.txt";  
-const std::string USB_CARD_PATH = "D:\\bastion_card.dat"; 
+const std::string ACCOUNT_FILE = "accounts.csv";
+
+// On Windows (submission): flash drive is D:\pin.code
+// On Mac (testing): uses a local file in the same folder
+#ifdef _WIN32
+    const std::string CARD_FILE_PATH = "D:\\pin.code";
+#else
+    const std::string CARD_FILE_PATH = "pin.code";
+#endif
 enum class AccountType { SAVINGS, CHECKING };
 
 #endif
