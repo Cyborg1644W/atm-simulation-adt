@@ -2,6 +2,8 @@
 #include "account.h"
 
 int main() {
+    AccountList list;
+
     Account dummyAcc;
     dummyAcc.accNumber = 12345;
     dummyAcc.savings = 5000.0;
@@ -9,6 +11,8 @@ int main() {
     dummyAcc.pinHash = 123456;
     dummyAcc.status = ACTIVE;
 
-    transactionMenu(&dummyAcc);
+    list.insertAccount(&dummyAcc);
+
+    transactionMenu(&dummyAcc, list);
     return 0;
 }

@@ -11,7 +11,7 @@
 #include <iostream>
 #include <fstream>
 
-void transactionMenu(Account* currentAccount);
+void transactionMenu(Account* currentAccount, AccountList& list);
 
 void mainMenu(AccountList& list) {
     bool running = true;
@@ -33,7 +33,7 @@ void mainMenu(AccountList& list) {
             // In a real scenario, we'd read the account number from the file.
             currentAccount = list.findByAccountNumber(12345); // Dummy account from test
             if (currentAccount != NULL) {
-                transactionMenu(currentAccount);
+                transactionMenu(currentAccount, list);
             } else {
                 std::cout << "Account from card not found in database.\n";
                 SLEEP_MS(2000);
@@ -49,7 +49,7 @@ void mainMenu(AccountList& list) {
     }
 }
 
-void transactionMenu(Account* currentAccount) {
+void transactionMenu(Account* currentAccount, AccountList& list) {
     if(currentAccount == NULL){ 
         std::cout << "Error: No Active Session Found" << std::endl;   
         return ; 
@@ -157,13 +157,13 @@ void transactionMenu(Account* currentAccount) {
                         printFundTransfer(targetAcc, input, 1);
                     });
                     
-                    long accNum = 0;
-                    try { accNum = std::stol(targetAcc); } catch(...) {}
+                    int accNum = 0;
+                    try { accNum = std::stoi(targetAcc); } catch(...) {}
                     
                     double amount = 0;
                     try { amount = std::stod(amountStr); } catch(...) {}
                     
-                    status = transfer(*currentAccount, accNum, "", amount, std::to_string(currentAccount->pinHash));
+                    status = transfer(*currentAccount, list, accNum, "", amount, std::to_string(currentAccount->pinHash));
                 }
                 printResult(status);
 

@@ -86,7 +86,7 @@ inline TransactionStatus deposit(Account& acc, double amount, AccountType type) 
 }
 
 // 4. Fund Transfer
-inline TransactionStatus transfertransfer(Account& senderAcc, AccountList& db, int recipientAccNum, std::string recipientName, double amount, std::string pin) {
+inline TransactionStatus transfer(Account& senderAcc, AccountList& db, int recipientAccNum, std::string recipientName, double amount, std::string pin) {
     // TODO: Check cancel sentinel at each input step
     if (recipientAccNum == 0 || amount <= 0 || pin == "0") {
         return TransactionStatus::CANCELLED;
