@@ -208,13 +208,13 @@ void printMainMenu1(){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      |               .---------.               |      |" << std::endl;
-    std::cout << "|  [ ] |               | [=====] |               | [ ]  |" << std::endl;
+    std::cout << "|  [1] |               | [=====] |               | [5]  |" << std::endl;
     std::cout << "|      |               '---------'               |      |" << std::endl;
-    std::cout << "|  [ ] |                   /|\\                   | [ ]  |" << std::endl;
+    std::cout << "|  [2] |                   /|\\                   | [6]  |" << std::endl;
     std::cout << "|      |                    |                    |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |         PLEASE INSERT YOUR CARD         |      |" << std::endl;
-    std::cout << "|  [ ] |          (Press ENTER to check)         | [ ]  |" << std::endl;
+    std::cout << "|  [4] |          (Press ENTER to check)         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -223,13 +223,13 @@ void printMainMenu2(){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      |               .---------.               |      |" << std::endl;
-    std::cout << "|  [ ] |               | [=====] |               | [ ]  |" << std::endl;
+    std::cout << "|  [1] |               | [=====] |               | [5]  |" << std::endl;
     std::cout << "|      |               '---------'               |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [2] |                                         | [6]  |" << std::endl;
     std::cout << "|      |                   /|\\                   |      |" << std::endl;
-    std::cout << "|  [ ] |                    |                    | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                    |                    | [7]  |" << std::endl;
     std::cout << "|      |         PLEASE INSERT YOUR CARD         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                                         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -245,15 +245,15 @@ void printRegisterScreen1(const std::string& fName, const std::string& lName,
     
     std::string fnLine = "First Name: " + fName + (step == 0 ? "_" : "");
     while(fnLine.length() < 39) fnLine += " ";
-    std::cout << "|  [ ] | " << fnLine << " | [ ]  |" << std::endl;
+    std::cout << "|  [1] | " << fnLine << " | [5]  |" << std::endl;
     
     std::string lnLine = "Last Name : " + lName + (step == 1 ? "_" : "");
     while(lnLine.length() < 39) lnLine += " ";
     std::cout << "|      | " << lnLine << " |      |" << std::endl;
     
-    std::string bdLine = "Birthday  : " + bday + (step == 2 ? "_" : "");
+    std::string bdLine = "Birthday (MM/DD/YY) : " + bday + (step == 2 ? "_" : "");
     while(bdLine.length() < 39) bdLine += " ";
-    std::cout << "|  [ ] | " << bdLine << " | [ ]  |" << std::endl;
+    std::cout << "|  [2] | " << bdLine << " | [6]  |" << std::endl;
     
     std::string ctLine = "Contact No: " + contact + (step == 3 ? "_" : "");
     while(ctLine.length() < 39) ctLine += " ";
@@ -261,10 +261,10 @@ void printRegisterScreen1(const std::string& fName, const std::string& lName,
     
     std::string dpLine = "Deposit   : " + deposit + (step == 4 ? "_" : "");
     while(dpLine.length() < 39) dpLine += " ";
-    std::cout << "|  [ ] | " << dpLine << " | [ ]  |" << std::endl;
+    std::cout << "|  [3] | " << dpLine << " | [7]  |" << std::endl;
     
     std::cout << "|      |                                         |      |" << std::endl;                 
-    std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [4] |                                         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -323,17 +323,17 @@ void printPinScreen(const std::string& pin, int step) {
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |             CREATE YOUR PIN             |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [1] |                                         | [5]  |" << std::endl;
     std::cout << "|      | Enter 4 or 6-digit PIN:                 |      |" << std::endl;
     
     std::string pinLine = "PIN: " + pin + (step == 5 ? "_" : "");
     while(pinLine.length() < 39) pinLine += " ";
-    std::cout << "|  [ ] | " << pinLine << " | [ ]  |" << std::endl;
+    std::cout << "|  [2] | " << pinLine << " | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [4] |        PRESS 'ENTER' TO PROCEED         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      | Press '0' to Cancel                     |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     withoutCard();
 }
@@ -343,21 +343,21 @@ void printConfirmPinScreen(const std::string& pin, const std::string& confirmPin
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |           CONFIRM YOUR PIN              |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      | Re-enter your PIN to verify:            |      |" << std::endl;
+    std::cout << "|  [1] | Re-enter your PIN to verify:            | [5]  |" << std::endl;
     
     std::string maskedPin = "";
     for(size_t i = 0; i < pin.length(); ++i) maskedPin += "*"; 
     
     std::string confLine = "Confirm: " + confirmPin + (step == 6 ? "_" : "");
     while(confLine.length() < 39) confLine += " ";
-    std::cout << "|  [ ] | " << confLine << " | [ ]  |" << std::endl;
+    std::cout << "|      | " << confLine << " |      |" << std::endl;
     
+    std::cout << "|  [2] |                                         | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [4] |        PRESS 'ENTER' TO PROCEED         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      | Press '0' to Cancel                     |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     withoutCard();
 }
@@ -368,19 +368,20 @@ void printRegistrationSuccess(int newAccNum) {
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |          REGISTRATION SUCCESS           |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [1] |                                         | [5]  |" << std::endl;
 
     std::string line1 = "Account No: " + std::to_string(newAccNum);
     while (line1.length() < 39) line1 += " ";
-    std::cout << "|  [ ] | " << line1 << " | [ ]  |" << std::endl;
+    std::cout << "|      | " << line1 << " | [ ]  |" << std::endl;
 
-    std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [2] |                                         | [6]  |" << std::endl;
 
     std::string line2 = "Card file (pin.code) generated.";
     while (line2.length() < 39) line2 += " ";
     std::cout << "|      | " << line2 << " |      |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|  [4] |                                         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     withoutCard();
@@ -454,17 +455,17 @@ void enterPinCode1(const std::string& currentPin){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |         PLEASE ENTER YOUR PIN           |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [1] |                                         | [5]  |" << std::endl;
     
     std::string line = "              " + currentPin + "_";
     while (line.length() < 39) line += " ";
     std::cout << "|      | " << line << " |      |" << std::endl;
     
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [2] |                                         | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] | < CANCEL                  PROCEED (O) > | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [4] |        PRESS 'ENTER' TO PROCEED         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -473,13 +474,13 @@ void printBalanceInquiryMenu1(){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |             BALANCE INQUIRY             |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [1] | < SAVINGS                               | [ ]  |" << std::endl;
+    std::cout << "|  [1] | < SAVINGS                               | [5]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [2] | < CURRENT                               | [ ]  |" << std::endl;
+    std::cout << "|  [2] | < CURRENT                               | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                            CANCEL (O) > | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                              CANCEL   > | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -488,13 +489,13 @@ void printBalanceInquiry1(Account waw){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |             BALANCE INQUIRY             |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [1] |                                         | [5]  |" << std::endl;
     std::cout << "|      | Account No.: " << std::left << std::setw(27) << waw.accNumber << "|      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [2] |                                         | [6]  |" << std::endl;
     std::cout << "|      | Current Savings: " << std::left << std::fixed << std::setprecision(2) << std::setw(23) << waw.savings << "|      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      | Available: " << std::left << std::fixed << std::setprecision(2) << std::setw(29) << (waw.savings - MAINTAINING_BALANCE) << "|      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                                         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -503,13 +504,13 @@ void printWithdrawMenu1(){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |                WITHDRAW                 |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [1] | < SAVINGS                               | [ ]  |" << std::endl;
+    std::cout << "|  [1] | < SAVINGS                               | [5]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [2] | < CURRENT                               | [ ]  |" << std::endl;
+    std::cout << "|  [2] | < CURRENT                               | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                            CANCEL (O) > | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                              CANCEL   > | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -518,18 +519,18 @@ void printEnterAmount(const std::string& amountStr){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |     PLEASE ENTER THE DESIRED AMOUNT     |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [1] |                                         | [5]  |" << std::endl;
     
     std::string line = "               " + amountStr + "";
     while (line.length() < 39) line += " ";
     if (line.length() > 39) line = line.substr(0, 39);
     
     std::cout << "|      | " << line << " |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [2] |                                         | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                                         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -538,13 +539,13 @@ void printDepositMenu1(){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |                 DEPOSIT                 |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [1] | < SAVINGS                               | [ ]  |" << std::endl;
+    std::cout << "|  [1] | < SAVINGS                               | [5]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [2] | < CURRENT                               | [ ]  |" << std::endl;
+    std::cout << "|  [2] | < CURRENT                               | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                            CANCEL (O) > | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                              CANCEL   > | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -553,13 +554,13 @@ void printFundTransferMenu1(){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |              FUND TRANSER               |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [1] | < SAVINGS                               | [ ]  |" << std::endl;
+    std::cout << "|  [1] | < SAVINGS                               | [5]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [2] | < CURRENT                               | [ ]  |" << std::endl;
+    std::cout << "|  [2] | < CURRENT                               | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                            CANCEL (O) > | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                              CANCEL   > | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -571,17 +572,17 @@ void printFundTransfer1(const std::string& accStr, const std::string& amountStr,
     
     std::string accLine = "Account Number: " + accStr + (step == 0 ? "_" : "");
     while(accLine.length() < 39) accLine += " ";
-    std::cout << "|  [ ] | " << accLine << " | [ ]  |" << std::endl;
+    std::cout << "|  [1] | " << accLine << " | [5]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     
     std::string amtLine = "Amount: " + amountStr + (step == 1 ? "_" : "");
     while(amtLine.length() < 39) amtLine += " ";
-    std::cout << "|  [ ] | " << amtLine << " | [ ]  |" << std::endl;
+    std::cout << "|  [2] | " << amtLine << " | [6]  |" << std::endl;
     
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                            CANCEL (O) > | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                              CANCEL   > | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -593,19 +594,19 @@ void printChangePinCode1(const std::string& oldPin, const std::string& newPin, c
 
     std::string oldPinLine = "Old Pin Code: " + oldPin + (step == 0 ? "_" : "");
     while(oldPinLine.length() < 39) oldPinLine += " ";
-    std::cout << "|  [ ] | " << oldPinLine << " | [ ]  |" << std::endl;
+    std::cout << "|  [1] | " << oldPinLine << " | [5]  |" << std::endl;
     
     std::string newPinLine = "New Pin Code: " + newPin + (step == 1 ? "_" : "");
     while(newPinLine.length() < 39) newPinLine += " ";
-    std::cout << "|  [ ] | " << newPinLine << " | [ ]  |" << std::endl;
+    std::cout << "|  [2] | " << newPinLine << " | [6]  |" << std::endl;
     
     std::string confirmPinLine = "New Pin Code (Confirm): " + confirmPin + (step == 2 ? "_" : "");
     while(confirmPinLine.length() < 39) confirmPinLine += " ";
     std::cout << "|      | " << confirmPinLine << " |      |" << std::endl;
     
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                            CANCEL (O) > | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                              CANCEL   > | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -635,16 +636,16 @@ void printResult1(TransactionStatus status){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |         " << std::left << std::setw(31) << message << " | [ ]  |" << std::endl;
+    std::cout << "|  [1] |         " << std::left << std::setw(31) << message << " | [5]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
 }
 
 bool askAnotherTransaction(){
-    std::cout << "|  [ ] |           Another transaction?          | [ ]  |" << std::endl;
+    std::cout << "|  [2] |           Another transaction?          | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                   YES > | [7]  |" << std::endl;
+    std::cout << "|  [3] |                                   YES > | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                    NO > | [8]  |" << std::endl;
+    std::cout << "|  [4] |                                    NO > | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     withCard();
@@ -664,13 +665,13 @@ void accountLocked(){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [1] |                                         | [5]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |      ACCOUNT LOCKED AFTER TOO MANY      | [ ]  |" << std::endl;
+    std::cout << "|  [2] |      ACCOUNT LOCKED AFTER TOO MANY      | [6]  |" << std::endl;
     std::cout << "|      |            FAILED ATTEMPTS.             |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                                         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
@@ -679,15 +680,15 @@ void incorrectAttempts(int attempts){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [1] |                                         | [5]  |" << std::endl;
     std::cout << "|      |    Incorrect PIN. Attempts left: "
                               << (MAX_LOGIN_ATTEMPTS - attempts)
                               << std::string(6, ' ') << "|      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [2] |                                         | [6]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [ ] |                                         | [ ]  |" << std::endl;
+    std::cout << "|  [4] |                                         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
