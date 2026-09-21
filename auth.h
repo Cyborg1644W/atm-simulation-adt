@@ -25,7 +25,7 @@ enum class AuthStatus {
     CARD_WRITE_FAILED
 };
 
-// Write accNumber and pinHash into the pin.code file on the flash drive
+// Write accNumber and pinHash on the flash drive
 bool writeCardFile(int accNumber, unsigned long pinHash) {
     std::ofstream file(CARD_FILE_PATH);
     if (!file.is_open()) return false;
@@ -72,26 +72,26 @@ AuthStatus registerAccount(AccountList& list,
     Account newAcc(accountNum, firstName, lastName, birthday, contact, initialDeposit, 0, hashedPin, ACTIVE);
     list.insertAccount(&newAcc);
 
-    // Write account number and hashed PIN to the flash drive (pin.code)
+    // write accNum and hash (card / flashdrive)
     if (!writeCardFile(accountNum, hashedPin)) return AuthStatus::CARD_WRITE_FAILED;
 
     return AuthStatus::SUCCESS;
 }
 
 AuthStatus login(AccountList& list, const std::string& pin, Account*& loggedInAccount) {
-    // Read card file to get the account number
+    // read card file
     int accNum = 0;
     unsigned long cardPinHash = 0;
     if (!readCardFile(accNum, cardPinHash)) return AuthStatus::ACCOUNT_NOT_FOUND;
 
-    // Find account in list using the number from the card
+    // find acc (accNum)
     Account* acc = list.findByAccountNumber(accNum);
     if (acc == NULL) return AuthStatus::ACCOUNT_NOT_FOUND;
 
     if (isLocked(*acc))     return AuthStatus::ACCOUNT_LOCKED;
     if (isTerminated(*acc)) return AuthStatus::ACCOUNT_TERMINATED;
 
-    // Verify PIN against the list's stored hash
+    // if pass is incorrect
     if (!SecurityManager::verifyPin(pin, acc->pinHash)) {
         acc->failedAttempts++;
         if (acc->failedAttempts >= MAX_LOGIN_ATTEMPTS) {

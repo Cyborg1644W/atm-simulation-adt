@@ -402,7 +402,7 @@ void printTransactionMenu1(){
 }
 
 void head(){
-    system("cls");
+    CLEAR_SCREEN();
     std::cout << "+=======================================================+" << std::endl;
     std::cout << "|                                                       |" << std::endl;
     std::cout << "|                     BASTION UNION                     |" << std::endl;
