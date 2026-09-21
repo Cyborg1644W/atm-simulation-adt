@@ -19,7 +19,7 @@ const std::string ACCOUNT_FILE = "accounts.csv";
 #ifdef _WIN32
     const std::string CARD_FILE_PATH = "D:\\pin.code";
 #else
-    const std::string CARD_FILE_PATH = "pin.code";
+    const std::string CARD_FILE_PATH = "password.md";
 #endif
 enum class AccountType { SAVINGS, CHECKING };
 

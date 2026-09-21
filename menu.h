@@ -57,11 +57,11 @@ void mainMenu(AccountList& list) {
             std::string firstName, lastName, birthday, contact, pin, confirmPin;
             double deposit = 0;
 
-            std::cout << "First Name   : "; std::cin >> firstName;
-            std::cout << "Last Name    : "; std::cin >> lastName;
-            std::cout << "Birthday (MM/DD/YY): "; std::cin >> birthday;
-            std::cout << "Contact No.  : "; std::cin >> contact;
-            std::cout << "Initial Deposit (min 5000): "; std::cin >> deposit;
+            std::cout << "First Name   : "; std::cin >> firstName;   std::cin.ignore(1000, '\n');
+            std::cout << "Last Name    : "; std::cin >> lastName;    std::cin.ignore(1000, '\n');
+            std::cout << "Birthday (MM/DD/YY): "; std::cin >> birthday; std::cin.ignore(1000, '\n');
+            std::cout << "Contact No.  : "; std::cin >> contact;    std::cin.ignore(1000, '\n');
+            std::cout << "Initial Deposit (min 5000): "; std::cin >> deposit; std::cin.ignore(1000, '\n');
             std::cout << "PIN (4-6 digits): ";
             pin = getRealTimeInput([](const std::string& s){
                 std::cout << "PIN (4-6 digits): " << s;
