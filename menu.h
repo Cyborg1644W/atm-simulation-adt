@@ -23,7 +23,6 @@ void mainMenu(AccountList& list) {
             head();
             printMainMenu1();
             withoutCard();
-            std::cout << "Please insert your ATM card (press ENTER to check)..." << std::endl;
             std::cin.ignore();
 
             std::ifstream cardFile(CARD_FILE_PATH);
@@ -36,7 +35,6 @@ void mainMenu(AccountList& list) {
             head();
             printMainMenu2();
             withoutCard();
-            std::cout << "No card detected. Please insert your ATM card." << std::endl;
             SLEEP_MS(2000);
         }
 
@@ -47,61 +45,79 @@ void mainMenu(AccountList& list) {
         bool cardHasAccount = readCardFile(cardAccNum, cardPinHash)
                               && list.findByAccountNumber(cardAccNum) != NULL;
 
-        if (!cardHasAccount) {
-            // --- NEW CARD: REGISTRATION ---
-            CLEAR_SCREEN();
-            head();
-            std::cout << "|      NEW CARD DETECTED — REGISTRATION                  |" << std::endl;
-            withoutCard();
+        if (!cardHasAccount) { //dito may changes
+            printRegisterScreen("", "", "", "", "", "", "", -1); 
+            char choice = getch();
+    
+            if (choice == '0' || choice == 'o' || choice == 'O') {
+                continue; 
+            } 
 
-            std::string firstName, lastName, birthday, contact, pin, confirmPin;
-            double deposit = 0;
+            std::string firstName, lastName, birthday, contact, depositStr, pin, confirmPin;
 
-            std::cout << "First Name   : "; std::cin >> firstName;
-            std::cout << "Last Name    : "; std::cin >> lastName;
-            std::cout << "Birthday (MM/DD/YY): "; std::cin >> birthday;
-            std::cout << "Contact No.  : "; std::cin >> contact;
-            std::cout << "Initial Deposit (min 5000): "; std::cin >> deposit;
-            std::cout << "PIN (4-6 digits): ";
-            pin = getRealTimeInput([](const std::string& s){
-                std::cout << "PIN (4-6 digits): " << s;
-            }, true);
-            std::cout << "Confirm PIN  : ";
-            confirmPin = getRealTimeInput([](const std::string& s){
-                std::cout << "Confirm PIN  : " << s;
-            }, true);
+            firstName = getRealTimeInput([&](const std::string& input){
+                printRegisterScreen(input, "", "", "", "", "", "", 0);
+            });
+            if (firstName == "0") continue;
+
+            lastName = getRealTimeInput([&](const std::string& input){
+                printRegisterScreen(firstName, input, "", "", "", "", "", 1);
+            });
+            if (lastName == "0") continue;
+
+            birthday = getRealTimeInput([&](const std::string& input){
+                printRegisterScreen(firstName, lastName, input, "", "", "", "", 2);
+            });
+            if (birthday == "0") continue;
+
+            contact = getRealTimeInput([&](const std::string& input){
+                printRegisterScreen(firstName, lastName, birthday, input, "", "", "", 3);
+            });
+            if (contact == "0") continue;
+
+            depositStr = getRealTimeInput([&](const std::string& input){
+                printRegisterScreen(firstName, lastName, birthday, contact, input, "", "", 4);
+            });
+            if (depositStr == "0") continue;
+
+            printPinScreen("", 5);
+            pin = getRealTimeInput([&](const std::string& input){
+                printPinScreen(input, 5);
+            }, true); 
+            if (pin == "0") continue;
+
+            printConfirmPinScreen(pin, "", 6);
+            confirmPin = getRealTimeInput([&](const std::string& input){
+                printConfirmPinScreen(pin, input, 6);
+            }, true); 
+            if (confirmPin == "0") continue;
 
             if (pin != confirmPin) {
-                std::cout << "\nPINs do not match. Please try again." << std::endl;
+                CLEAR_SCREEN();
+                head();
+                std::cout << "|  PINs do not match. Registration cancelled.   |" << std::endl;
+                withoutCard();
                 SLEEP_MS(2000);
                 continue;
             }
 
-            AuthStatus result = registerAccount(list, firstName, lastName, birthday, contact, deposit, pin);
+            double deposit = 0;
+            try { deposit = std::stod(depositStr); } catch(...) {}
 
-            CLEAR_SCREEN();
-            head();
+            AuthStatus result = registerAccount(list, firstName, lastName, birthday, contact, deposit, pin);
+    
+            printAuthResult(result); 
+
             if (result == AuthStatus::SUCCESS) {
-                // Find the newly created account to show the number
                 int newNum = 0;
                 unsigned long newHash = 0;
                 readCardFile(newNum, newHash);
-                std::cout << "|  Registration successful!                             |" << std::endl;
-                std::cout << "|  Your Account Number: " << newNum << std::string(29, ' ') << "|" << std::endl;
-                std::cout << "|  Your card (pin.code) has been written.               |" << std::endl;
-                saveAccounts(list);
-            } else if (result == AuthStatus::CARD_ALREADY_LINKED) {
-                std::cout << "|  This card already has an account linked.             |" << std::endl;
-            } else if (result == AuthStatus::INVALID_PIN_FORMAT) {
-                std::cout << "|  Invalid PIN format (must be 4-6 digits).             |" << std::endl;
-            } else if (result == AuthStatus::INVALID_DEPOSIT) {
-                std::cout << "|  Initial deposit must be at least 5000.               |" << std::endl;
+        
+                printRegistrationSuccess(newNum); 
+                saveAccounts(list);               
             } else {
-                std::cout << "|  Registration failed. Please check your details.      |" << std::endl;
+                SLEEP_MS(3000); 
             }
-            withoutCard();
-            SLEEP_MS(3000);
-
         } else {
             // --- EXISTING CARD: LOGIN ---
             int attempts = 0;
@@ -122,7 +138,7 @@ void mainMenu(AccountList& list) {
                 } else if (result == AuthStatus::ACCOUNT_LOCKED) {
                     CLEAR_SCREEN();
                     head();
-                    std::cout << "|  Account locked after too many failed attempts.       |" << std::endl;
+                    accountLocked();
                     withCard();
                     SLEEP_MS(3000);
                     saveAccounts(list);
@@ -132,9 +148,7 @@ void mainMenu(AccountList& list) {
                     attempts++;
                     CLEAR_SCREEN();
                     head();
-                    std::cout << "|  Incorrect PIN. Attempts left: "
-                              << (MAX_LOGIN_ATTEMPTS - attempts)
-                              << std::string(20, ' ') << "|" << std::endl;
+                    incorrectAttempts(attempts);
                     withCard();
                     SLEEP_MS(2000);
                 }
@@ -174,7 +188,7 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     status = TransactionStatus::CANCELLED;
                 } else {
                     printBalanceInquiry(*currentAccount);
-                    SLEEP_MS(2000);
+                    SLEEP_MS(5000);
                     status = TransactionStatus::SUCCESS;
                 }
                 printResult(status);
@@ -183,7 +197,6 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     continue; 
                 }    
 
-                anotherTransaction = askAnotherTransaction();
                 break; 
             }
 
@@ -209,7 +222,6 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     continue; 
                 }       
 
-                anotherTransaction = askAnotherTransaction();
                 break; 
             }
 
@@ -235,11 +247,10 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     continue; 
                 }    
 
-                anotherTransaction = askAnotherTransaction();
                 break;
             }
 
-            case '4': {
+            case '5': {
                 printFundTransferMenu(); 
                 char type = getch();
                 if (type == '0' || type == 'o' || type == 'O') {
@@ -270,11 +281,10 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     continue; 
                 }    
 
-                anotherTransaction = askAnotherTransaction();
                 break; 
             }
 
-            case '5': {
+            case '6': {
                 std::string oldPin;
                 std::string newPin;
                 std::string confirmPin;
@@ -298,11 +308,9 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     continue; 
                 }    
 
-                anotherTransaction = askAnotherTransaction();
                 break;
             }
 
-            case '6': 
             case '7': {
                 anotherTransaction = false; 
                 break;

@@ -12,12 +12,12 @@ const int PIN_MAX_LENGTH = 6;
 const int STARTING_ACCOUNT_NUMBER = 1000; 
 
 const std::string CANCEL = "0"; 
-const std::string ACCOUNT_FILE = "accounts.csv";
+const std::string ACCOUNT_FILE = "accounts6.csv";
 
 // On Windows (submission): flash drive is D:\pin.code
 // On Mac (testing): uses a local file in the same folder
 #ifdef _WIN32
-    const std::string CARD_FILE_PATH = "D:\\pin.code";
+    const std::string CARD_FILE_PATH = "C:/Users/User/Documents/atm-simulation-adt/accounts6.csv";
 #else
     const std::string CARD_FILE_PATH = "pin.code";
 #endif

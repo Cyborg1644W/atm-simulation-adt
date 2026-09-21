@@ -5,8 +5,8 @@ using namespace std;
 int main() {
     Account dummyAcc;
     dummyAcc.accNumber = 12345;
-    dummyAcc.savings = 5000.0;
-    dummyAcc.checking = 1500.0;
+    dummyAcc.savings = 5000.;
+    dummyAcc.checking = 5000.0;
 
     cout << "--- withoutCard (main screen, no card) ---\n";
     withoutCard();
@@ -35,14 +35,14 @@ int main() {
     cout << "\n--- printFundTransferMenu ---\n";
     printFundTransferMenu();
 
-    cout << "\n--- printFundTransfer ---\n";
-    printFundTransfer();
+    // cout << "\n--- printFundTransfer ---\n";
+    // printFundTransfer();
 
     cout << "\n--- printChangePinEnter ---\n";
-    printChangePinEnter();
+    printChangePinEnter();      
 
-    cout << "\n--- printChangePinConfirmation ---\n";
-    printChangePinConfirmation();
+    // cout << "\n--- printChangePinConfirmation ---\n";
+    // printChangePinConfirmation();
 
     cout << "\n--- printResult1 ---\n";
     printResult1(TransactionStatus::SUCCESS);
