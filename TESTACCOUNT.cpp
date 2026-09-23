@@ -42,7 +42,6 @@ int main() {
 
     std::cout << "\n----------------------------------------\n";
 
-    // 4. Test finding an existing account
     std::cout << "Testing search for Alice's account number (" << acc1Num << ")...\n";
     Account* foundAlice = bankList.findByAccountNumber(acc1Num);
     
@@ -53,7 +52,7 @@ int main() {
         std::cout << "[ERROR] Account not found!\n";
     }
 
-    // 5. Test searching for a non-existent account
+
     long fakeAcc = 99999;
     std::cout << "\nTesting search for non-existent account (" << fakeAcc << ")...\n";
     Account* foundFake = bankList.findByAccountNumber(fakeAcc);

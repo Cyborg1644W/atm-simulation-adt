@@ -188,10 +188,10 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     status = TransactionStatus::CANCELLED;
                 } else {
                     printBalanceInquiry(*currentAccount);
-                    SLEEP_MS(5000);
+                    getch();
                     status = TransactionStatus::SUCCESS;
                 }
-                printResult(status);
+                printResult(status, anotherTransaction);
 
                 if (status == TransactionStatus::CANCELLED) {
                     continue; 
@@ -216,7 +216,7 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     
                     status = withdraw(*currentAccount, amount, accType);
                 }
-                printResult(status);
+                printResult(status, anotherTransaction);
 
                 if (status == TransactionStatus::CANCELLED) {
                     continue; 
@@ -241,7 +241,7 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     
                     status = deposit(*currentAccount, amount, accType);
                 }
-                printResult(status);
+                printResult(status, anotherTransaction);
 
                 if (status == TransactionStatus::CANCELLED) {
                     continue; 
@@ -258,6 +258,7 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                 } else {
                     std::string targetAcc;
                     std::string amountStr;
+                    std::string pinStr;
                     
                     targetAcc = getRealTimeInput([&](const std::string& input){
                         printFundTransfer(input, "", 0);
@@ -267,15 +268,19 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                         printFundTransfer(targetAcc, input, 1);
                     });
                     
+                    pinStr = getRealTimeInput([&](const std::string& input){
+                        printEnterPinCode(input);
+                    }, true);
+                    
                     int accNum = 0;
                     try { accNum = std::stoi(targetAcc); } catch(...) {}
                     
                     double amount = 0;
                     try { amount = std::stod(amountStr); } catch(...) {}
                     
-                    status = transfer(*currentAccount, list, accNum, "", amount, std::to_string(currentAccount->pinHash));
+                    status = transfer(*currentAccount, list, accNum, "", amount, pinStr);
                 }
-                printResult(status);
+                printResult(status, anotherTransaction);
 
                 if (status == TransactionStatus::CANCELLED) {
                     continue; 
@@ -290,19 +295,25 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                 std::string confirmPin;
                 
                 oldPin = getRealTimeInput([&](const std::string& input){
-                    printChangePinConfirmation(input, "", "", 0);
+                    std::string mask(input.size(), '*');
+                    printChangePinConfirmation(mask, "", "", 0);
                 }, true);
                 
                 newPin = getRealTimeInput([&](const std::string& input){
-                    printChangePinConfirmation(oldPin, input, "", 1);
+                    std::string oldMask(oldPin.size(), '*');
+                    std::string mask(input.size(), '*');
+                    printChangePinConfirmation(oldMask, mask, "", 1);
                 }, true);
                 
                 confirmPin = getRealTimeInput([&](const std::string& input){
-                    printChangePinConfirmation(oldPin, newPin, input, 2);
+                    std::string oldMask(oldPin.size(), '*');
+                    std::string newMask(newPin.size(), '*');
+                    std::string mask(input.size(), '*');
+                    printChangePinConfirmation(oldMask, newMask, mask, 2);
                 }, true);
                 
                 status = changePin(*currentAccount, oldPin, newPin, confirmPin);
-                printResult(status);
+                printResult(status, anotherTransaction);
 
                 if (status == TransactionStatus::CANCELLED) {
                     continue; 

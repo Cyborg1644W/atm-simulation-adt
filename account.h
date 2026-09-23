@@ -1,6 +1,5 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
-
 #include <cstdlib>
 #include <string>
 
@@ -15,17 +14,17 @@ struct Account {
     double savings;
     double checking;
     unsigned long pinHash;
-    AccountStatus status;
+    int status;
     int failedAttempts;
 
-    Account()
-        : accNumber(0), savings(0.0), checking(0.0), pinHash(0), status(ACTIVE), failedAttempts(0) {}
+    Account() : accNumber(0), savings(0), checking(0), pinHash(0), status(0), failedAttempts(0) {}
 
-    Account(int accNum, std::string fName, std::string lName, std::string bday,
-            std::string contactNum, double sav, double chk, unsigned long hash, AccountStatus stat)
-        : accNumber(accNum), firstName(fName), lastName(lName), birthday(bday),
-          contact(contactNum), savings(sav), checking(chk), pinHash(hash),
-          status(stat), failedAttempts(0) {}
+    Account(int accNum, std::string fName, std::string lName,
+            std::string bday, std::string contactNum, double sav,
+            double chk, unsigned long hash, int stat)
+        : accNumber(accNum), firstName(fName), lastName(lName),
+          birthday(bday), contact(contactNum), savings(sav), checking(chk),
+          pinHash(hash), status(stat), failedAttempts(0) {}
 };
 
 struct Node {
@@ -36,29 +35,39 @@ struct Node {
 
 class AccountList {
 private:
-    Node *head;
+    Node * head;
 public:
     AccountList() { head = NULL; }
     ~AccountList() {
         Node *p;
-        while (head != NULL) { p = head; head = head->next; delete p; }
-    }
-    void insertAccount(Account *newAcc);
-    Account *findByAccountNumber(int accNum);
+        while(head != NULL) {
+            p = head;
+            head = head->next;
+            delete p; }
+        }
+    Node* getHead() const { return head; }
+    void insertAccount(Account* newAcc);
+    Account* findByAccountNumber(int accNum);
     int generateAccountNumber();
-    Node* getHead() { return head; }
 };
 
-void AccountList::insertAccount(Account *newAcc) {
+void AccountList::insertAccount(Account* newAcc) {
     Node *p, *q, *newNode;
     p = q = head;
     newNode = new Node(*newAcc);
-    while (p != NULL && p->data.accNumber < newAcc->accNumber) { q = p; p = p->next; }
-    if (p == head) { head = newNode; } else { q->next = newNode; }
+    while (p != NULL && p->data.accNumber < newAcc->accNumber) { 
+        q = p;
+        p = p->next;
+    }
+    if (p == head) {
+        head = newNode;
+    } else { 
+        q->next = newNode;
+    }
     newNode->next = p;
 }
 
-Account *AccountList::findByAccountNumber(int accNum) {
+Account* AccountList::findByAccountNumber(int accNum) {
     Node *current = head;
     while (current != NULL && accNum != current->data.accNumber) current = current->next;
     if (current == NULL) return NULL;
@@ -70,5 +79,4 @@ int AccountList::generateAccountNumber() {
     do { randomAccNum = 10000 + (rand() % 90000); } while (findByAccountNumber(randomAccNum) != NULL);
     return randomAccNum;
 }
-
 #endif

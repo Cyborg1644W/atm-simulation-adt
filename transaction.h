@@ -2,7 +2,6 @@
 #define TRANSACTION_H
 
 #include <iostream> 
-#include <fstream> 
 #include <string> 
 #include "account.h"
 #include "config.h"
@@ -144,17 +143,10 @@ inline TransactionStatus changePin(Account& acc, std::string oldPin, std::string
     if (isPinReused(newPin, acc)) {
         return TransactionStatus::PIN_REUSED;
     }
-    // Hash and overwrite in memory
+    // TODO: Hash and overwrite via security.h
     acc.pinHash = SecurityManager::hashPin(newPin);
-
-    // Also update the pin.code file on the flash drive
-    std::ofstream cardFile(CARD_FILE_PATH);
-    if (cardFile.is_open()) {
-        cardFile << acc.accNumber << "\n" << acc.pinHash << "\n";
-        cardFile.close();
-    }
     
-    return TransactionStatus::SUCCESS;
+    return TransactionStatus::SUCCESS; // Change based on result
 }
 
 #endif

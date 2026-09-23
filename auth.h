@@ -35,7 +35,6 @@ bool writeCardFile(int accNumber, unsigned long pinHash) {
 }
 
 // Read accNumber and pinHash from the pin.code file
-// Returns false if file doesn't exist or is unreadable
 bool readCardFile(int& accNumber, unsigned long& pinHash) {
     std::ifstream file(CARD_FILE_PATH);
     if (!file.is_open()) return false;
@@ -59,12 +58,12 @@ AuthStatus registerAccount(AccountList& list,
     // Check if the card already has an account
     if (cardIsLinked(list)) return AuthStatus::CARD_ALREADY_LINKED;
 
-    if (!isValidName(firstName))        return AuthStatus::INVALID_NAME;
-    if (!isValidName(lastName))         return AuthStatus::INVALID_NAME;
-    if (!isValidBirthday(birthday))     return AuthStatus::INVALID_BIRTHDAY;
-    if (!isValidContact(contact))       return AuthStatus::INVALID_CONTACT;
+    if (!isValidName(firstName)) return AuthStatus::INVALID_NAME;
+    if (!isValidName(lastName)) return AuthStatus::INVALID_NAME;
+    if (!isValidBirthday(birthday)) return AuthStatus::INVALID_BIRTHDAY;
+    if (!isValidContact(contact)) return AuthStatus::INVALID_CONTACT;
     if (!isValidDeposit(initialDeposit)) return AuthStatus::INVALID_DEPOSIT;
-    if (!isValidPinFormat(pin))         return AuthStatus::INVALID_PIN_FORMAT;
+    if (!isValidPinFormat(pin)) return AuthStatus::INVALID_PIN_FORMAT;
 
     unsigned long hashedPin = SecurityManager::hashPin(pin);
     int accountNum = list.generateAccountNumber();

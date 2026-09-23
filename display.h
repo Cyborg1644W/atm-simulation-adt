@@ -159,10 +159,10 @@ void printChangePinConfirmation(const std::string& oldPin, const std::string& ne
     withCard();
 }
 
-void printResult(TransactionStatus status){
+void printResult(TransactionStatus status, bool& anotherTransaction){
     head();
     printResult1(status);
-    askAnotherTransaction();
+    anotherTransaction = askAnotherTransaction();
 }
 
 // Unified Real-Time Input Loop
