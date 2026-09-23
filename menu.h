@@ -184,7 +184,7 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
             case '1': {
                 printBalanceInquiryMenu(); 
                 char type = getch();
-                if (type == '0' || type == 'o' || type == 'O') {
+                if (type == '8' || type == 'o' || type == 'O') {
                     status = TransactionStatus::CANCELLED;
                 } else {
                     printBalanceInquiry(*currentAccount);
@@ -203,7 +203,7 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
             case '2': {
                 printWithdrawMenu(); 
                 char type = getch();
-                if (type == '0' || type == 'o' || type == 'O') {
+                if (type == '8' || type == 'o' || type == 'O') {
                     status = TransactionStatus::CANCELLED;
                 } else {
                     AccountType accType = (type == '1') ? AccountType::SAVINGS : AccountType::CHECKING;
@@ -228,7 +228,7 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
             case '3': {
                 printDepositMenu(); 
                 char type = getch();
-                if (type == '0' || type == 'o' || type == 'O') {
+                if (type == '8' || type == 'o' || type == 'O') {
                     status = TransactionStatus::CANCELLED;
                 } else {
                     AccountType accType = (type == '1') ? AccountType::SAVINGS : AccountType::CHECKING;
@@ -253,7 +253,7 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
             case '5': {
                 printFundTransferMenu(); 
                 char type = getch();
-                if (type == '0' || type == 'o' || type == 'O') {
+                if (type == '8' || type == 'o' || type == 'O') {
                     status = TransactionStatus::CANCELLED;
                 } else {
                     std::string targetAcc;

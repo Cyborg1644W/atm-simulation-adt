@@ -453,11 +453,11 @@ void withoutCard(){
 
 void enterPinCode1(const std::string& currentPin){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
-    std::cout << "|      |         PLEASE ENTER YOUR PIN           |      |" << std::endl;
+    std::cout << "|      |          PLEASE ENTER YOUR PIN          |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|  [1] |                                         | [5]  |" << std::endl;
     
-    std::string line = "              " + currentPin + "_";
+    std::string line = "                " + currentPin + "_";
     while (line.length() < 39) line += " ";
     std::cout << "|      | " << line << " |      |" << std::endl;
     
@@ -591,10 +591,10 @@ void printChangePinCode1(const std::string& oldPin, const std::string& newPin, c
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |             CHANGE PIN CODE             |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
-
+    std::cout << "|  [1] |                                         | [5]  |" << std::endl;
     std::string oldPinLine = "Old Pin Code: " + oldPin + (step == 0 ? "_" : "");
     while(oldPinLine.length() < 39) oldPinLine += " ";
-    std::cout << "|  [1] | " << oldPinLine << " | [5]  |" << std::endl;
+    std::cout << "|      | " << oldPinLine << " |      |" << std::endl;
     
     std::string newPinLine = "New Pin Code: " + newPin + (step == 1 ? "_" : "");
     while(newPinLine.length() < 39) newPinLine += " ";
@@ -633,11 +633,15 @@ void printResult1(TransactionStatus status){
         default:                                           { message = "UNKNOWN TRANSACTION ERROR"; break; }
     }
 
-    std::cout << "|      +-----------------------------------------+      |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
-    std::cout << "|  [1] |         " << std::left << std::setw(31) << message << " | [5]  |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
+    int totalPadding = 39 - message.length();
+    int left = totalPadding / 2;
+    int right = totalPadding - left;
+
+    std::cout << "|      +-----------------------------------------+      |\n";
+    std::cout << "|      |                                         |      |\n";
+    std::cout << "|      |                                         |      |\n";
+    std::cout << "|  [1] |" << std::string(left, '  ') << message << std::string(right, '  ') << "| [5]  |\n";
+    std::cout << "|      |                                         |      |\n";
 }
 
 bool askAnotherTransaction(){

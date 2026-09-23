@@ -5,6 +5,7 @@
 #include "config.h"
 #include <fstream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 
 void saveAccounts(AccountList &list) {
@@ -41,21 +42,30 @@ void loadAccounts(AccountList &list) {
     Account a;
 
     std::getline(ss, token, ',');
-    a.accNumber = std::stoi(token);
-    std::getline(ss, a.firstName, ',');
-    std::getline(ss, a.lastName, ',');
-    std::getline(ss, a.birthday, ',');
-    std::getline(ss, a.contact, ',');
-    std::getline(ss, token, ',');
-    a.savings = std::stod(token);
-    std::getline(ss, token, ',');
-    a.checking = std::stod(token);
-    std::getline(ss, token, ',');
-    a.pinHash = std::stoul(token);
-    std::getline(ss, token, ',');
-    a.status = (AccountStatus)std::stoi(token);
-    std::getline(ss, token, ',');
-    a.failedAttempts = std::stoi(token);
+    if (token.find_first_not_of(" \t\r\n") == std::string::npos)
+      continue;
+
+    try {
+      a.accNumber = std::stoi(token);
+      std::getline(ss, a.firstName, ',');
+      std::getline(ss, a.lastName, ',');
+      std::getline(ss, a.birthday, ',');
+      std::getline(ss, a.contact, ',');
+      std::getline(ss, token, ',');
+      a.savings = std::stod(token);
+      std::getline(ss, token, ',');
+      a.checking = std::stod(token);
+      std::getline(ss, token, ',');
+      a.pinHash = std::stoul(token);
+      std::getline(ss, token, ',');
+      a.status = (AccountStatus)std::stoi(token);
+      std::getline(ss, token, ',');
+      a.failedAttempts = std::stoi(token);
+    } catch (const std::invalid_argument &) {
+      continue;
+    } catch (const std::out_of_range &) {
+      continue;
+    }
 
     list.insertAccount(&a);
   }
