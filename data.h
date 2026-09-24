@@ -1,5 +1,5 @@
-#ifndef PERSISTENCE_H
-#define PERSISTENCE_H
+#ifndef DATA_H
+#define DATA_H
 
 #include "account.h"
 #include "config.h"

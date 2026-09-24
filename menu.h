@@ -5,7 +5,7 @@
 #include "display.h"
 #include "accountstatus.h"
 #include "transaction.h"
-#include "persistence.h"
+#include "data.h"
 #include "config.h"
 #include <iostream>
 #include <fstream>
