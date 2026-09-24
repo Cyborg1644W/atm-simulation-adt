@@ -25,11 +25,15 @@ inline TransactionStatus withdraw(Account& acc, double amount, AccountType type)
     if(amount <= 0){
         return TransactionStatus::CANCELLED;
     }
-    // TODO: Validate via validation.h (sufficient balance & maintaining balance)
-     if(hasSufficientBalance(acc, amount, type) == false){
+
+    if (!isValidCashAmount(amount)) {
+        return TransactionStatus::INVALID_AMOUNT;
+    }
+
+    if(hasSufficientBalance(acc, amount, type) == false){
         return TransactionStatus::INSUFFICIENT_FUNDS;
     }
-    // TODO: Mutate correct balance field based on type (Savings vs Checking)
+
     switch(type){
         case AccountType::SAVINGS: 
             acc.savings -= amount; 
@@ -41,7 +45,7 @@ inline TransactionStatus withdraw(Account& acc, double amount, AccountType type)
             return TransactionStatus::FAILED;
     }
     
-    return TransactionStatus::SUCCESS; // Change based on result
+    return TransactionStatus::SUCCESS;
 }
 
 // 3. Deposit
@@ -71,10 +75,14 @@ inline TransactionStatus deposit(Account& acc, double amount, AccountType type) 
 }
 
 // 4. Fund Transfer
-inline TransactionStatus transfer(Account& senderAcc, AccountList& db, int recipientAccNum, double amount, std::string pin) {
+inline TransactionStatus transfer(Account& senderAcc, AccountList& db, int recipientAccNum, double amount, std::string pin, AccountType type) {
     // TODO: Check cancel sentinel at each input step
     if (recipientAccNum == 0 || amount <= 0 || pin == "0") {
         return TransactionStatus::CANCELLED;
+    }
+
+    if (!isWholeAmount(amount)) {
+        return TransactionStatus::INVALID_AMOUNT;
     }
     //TODO: Prevent transfer to own account number
     if (senderAcc.accNumber == recipientAccNum) {
@@ -93,11 +101,15 @@ inline TransactionStatus transfer(Account& senderAcc, AccountList& db, int recip
         return TransactionStatus::INVALID_PIN;
     }
     // TODO: Validate sender has sufficient balance
-    if (hasSufficientBalance(senderAcc, amount, AccountType::SAVINGS) == false) {
+    if (hasSufficientBalance(senderAcc, amount, type) == false) {
         return TransactionStatus::INSUFFICIENT_FUNDS;
     }
-    // TODO: Mutate both nodes' balances
-    senderAcc.savings -= amount;
+
+    if (type == AccountType::SAVINGS) {
+        senderAcc.savings -= amount;
+    } else {
+        senderAcc.checking -= amount;
+    }
     recipient->savings += amount;
     
     return TransactionStatus::SUCCESS; // Change based on result

@@ -6,8 +6,20 @@
 #include "security.h"
 #include "config.h"
 
+bool isWholeAmount(double amount) {
+    return amount == static_cast<int>(amount);
+}
+
+bool isValidCashAmount(double amount) {
+    return amount >= 100 && isWholeAmount(amount) && static_cast<int>(amount) % 100 == 0;
+}
+
+bool isValidInitialDeposit(double amount){
+    return amount >= MIN_DEPOSIT && isValidCashAmount(amount);
+}
+
 bool isValidDeposit(double amount){
-    return amount >= MIN_DEPOSIT;
+    return isValidCashAmount(amount);
 }
 
 bool hasSufficientBalance(Account& acc, double amount, AccountType type) {

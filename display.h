@@ -50,7 +50,7 @@ void printRegistrationSuccess(int newAccNum);
 void enterPinCode1(const std::string& currentPin = "");
 void printTransactionMenu1();
 void printBalanceInquiryMenu1();
-void printBalanceInquiry1(Account waw);
+void printBalanceInquiry1(Account waw, AccountType type);
 void printDepositMenu1();
 void printEnterAmount(const std::string& amountStr = "");
 void printWithdrawMenu1();
@@ -96,9 +96,9 @@ void printBalanceInquiryMenu(){
     withCard();
 }
 
-void printBalanceInquiry(Account acc){
+void printBalanceInquiry(Account acc, AccountType type){
     head();
-    printBalanceInquiry1(acc);
+    printBalanceInquiry1(acc, type);
     withCard();
 }
 
@@ -458,16 +458,18 @@ void printBalanceInquiryMenu1(){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
 
-void printBalanceInquiry1(Account waw){
+void printBalanceInquiry1(Account waw, AccountType type){
+    double balance = type == AccountType::SAVINGS ? waw.savings : waw.checking;
+
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |             BALANCE INQUIRY             |      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|  [1] |                                         | [5]  |" << std::endl;
     std::cout << "|      | Account No.: " << std::left << std::setw(27) << waw.accNumber << "|      |" << std::endl;
     std::cout << "|  [2] |                                         | [6]  |" << std::endl;
-    std::cout << "|      | Current Savings: " << std::left << std::fixed << std::setprecision(2) << std::setw(23) << waw.savings << "|      |" << std::endl;
+    std::cout << "|      | Current Balance: " << std::left << std::fixed << std::setprecision(2) << std::setw(23) << balance << "|      |" << std::endl;
     std::cout << "|  [3] |                                         | [7]  |" << std::endl;
-    std::cout << "|      | Available: " << std::left << std::fixed << std::setprecision(2) << std::setw(29) << (waw.savings - MAINTAINING_BALANCE) << "|      |" << std::endl;
+    std::cout << "|      | Available: " << std::left << std::fixed << std::setprecision(2) << std::setw(29) << (balance - MAINTAINING_BALANCE) << "|      |" << std::endl;
     std::cout << "|  [4] |                                         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;

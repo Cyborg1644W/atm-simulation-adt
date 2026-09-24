@@ -60,7 +60,7 @@ AuthStatus registerAccount(AccountList& list,
     if (!isValidName(lastName)) return AuthStatus::INVALID_NAME;
     if (!isValidBirthday(birthday)) return AuthStatus::INVALID_BIRTHDAY;
     if (!isValidContact(contact)) return AuthStatus::INVALID_CONTACT;
-    if (!isValidDeposit(initialDeposit)) return AuthStatus::INVALID_DEPOSIT;
+    if (!isValidInitialDeposit(initialDeposit)) return AuthStatus::INVALID_DEPOSIT;
     if (!isValidPinFormat(pin)) return AuthStatus::INVALID_PIN_FORMAT;
 
     unsigned long hashedPin = SecurityManager::hashPin(pin);
