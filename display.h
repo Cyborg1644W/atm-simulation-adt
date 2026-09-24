@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
-#include <functional>
 #include "transaction.h"
 #include "account.h"
 #include "config.h"
@@ -151,7 +150,8 @@ void printResult(TransactionStatus status, bool& anotherTransaction){
 }
 
 // Unified Real-Time Input Loop
-std::string getRealTimeInput(std::function<void(const std::string&)> drawFunction, bool masked = false) {
+template <typename DrawFunction>
+std::string getRealTimeInput(DrawFunction drawFunction, bool masked = false) {
     std::string input = "";
     while (true) {
         CLEAR_SCREEN();
@@ -471,7 +471,7 @@ void printBalanceInquiry1(Account waw, AccountType type){
     std::cout << "|  [3] |                                         | [7]  |" << std::endl;
     std::cout << "|      | Available: " << std::left << std::fixed << std::setprecision(2) << std::setw(29) << (balance - MAINTAINING_BALANCE) << "|      |" << std::endl;
     std::cout << "|  [4] |                                         | [8]  |" << std::endl;
-    std::cout << "|      |                                         |      |" << std::endl;
+    std::cout << "|      |         PRESS 'ENTER' TO PROCEED        |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
 }
 
