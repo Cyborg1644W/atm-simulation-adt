@@ -2,7 +2,6 @@
 #define VALIDATION_H
 
 #include <string>
-#include <cctype>
 #include "account.h"
 #include "security.h"
 #include "config.h"
@@ -41,15 +40,7 @@ bool isValidPinFormat(const std::string& input) {
 }
 
 bool isPinReused(const std::string& newPin, const Account& acc) {
-    unsigned long hashedInput = SecurityManager::hashPin(newPin); 
-    if(hashedInput == acc.pinHash){
-        return true; 
-    } else 
-        return false;
-}
-
-bool isStrongPin(const std::string& pin) {
-    return false;
+    return SecurityManager::hashPin(newPin) == acc.pinHash;
 }
 
 bool isValidName(const std::string& input) {

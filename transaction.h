@@ -1,39 +1,24 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
-#include <iostream> 
 #include <string> 
 #include "account.h"
 #include "config.h"
 #include "validation.h"
 #include "security.h"
 
-struct BalanceInquiry {
-    double savings;
-    double checking;
-};
-
 enum class TransactionStatus{
     SUCCESS,
     FAILED,
     INSUFFICIENT_FUNDS,
-    BELOW_MAINTAINING_BALANCE,
     INVALID_AMOUNT,
     RECIPIENT_NOT_FOUND,
     PIN_MISMATCH,
     PIN_REUSED,
     INVALID_PIN,
     INVALID_PIN_FORMAT,
-    CANCELLED,
-    ACCOUNT_LOCKED,
-    ACCOUNT_TERMINATED,
-    REGISTRATION_SUCCESS,
-    CARD_ALREADY_LINKED
+    CANCELLED
 };
-
-BalanceInquiry getBalance(Account& acc) { //used for receipt, balance checking and etc. 
-    return { acc.savings, acc.checking };
-}
 
 inline TransactionStatus withdraw(Account& acc, double amount, AccountType type) {
 
@@ -86,7 +71,7 @@ inline TransactionStatus deposit(Account& acc, double amount, AccountType type) 
 }
 
 // 4. Fund Transfer
-inline TransactionStatus transfer(Account& senderAcc, AccountList& db, int recipientAccNum, std::string recipientName, double amount, std::string pin) {
+inline TransactionStatus transfer(Account& senderAcc, AccountList& db, int recipientAccNum, double amount, std::string pin) {
     // TODO: Check cancel sentinel at each input step
     if (recipientAccNum == 0 || amount <= 0 || pin == "0") {
         return TransactionStatus::CANCELLED;

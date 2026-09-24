@@ -37,14 +37,12 @@
     }
 #endif
 
-char ifcontinue;
-
 void head();
 void withCard();
 void withoutCard();
 void printMainMenu1();
 void printMainMenu2();
-void printRegisterScreen1(const std::string& fName, const std::string& lName, const std::string& bday, const std::string& contact, const std::string& deposit, const std::string& pin, const std::string& confirmPin, int step);
+void printRegisterScreen1(const std::string& fName, const std::string& lName, const std::string& bday, const std::string& contact, const std::string& deposit, int step);
 void printAuthResult(AuthStatus status);
 void printPinScreen(const std::string& pin, int step);
 void printConfirmPinScreen(const std::string& pin, const std::string& confirmPin, int step);
@@ -65,17 +63,10 @@ void printMainMenuInsertCard();
 void printEnterPinCode(const std::string& currentPin = "");
 void accountLocked();
 void incorrectAttempts(int attempts);
-int countIntegerDigits(int num);
 
-void printMainMenu(){
-    head();
-    printMainMenuInsertCard();
-    withoutCard();
-}
-
-void printRegisterScreen(const std::string& fName, const std::string& lName, const std::string& bday, const std::string& contact, const std::string& deposit, const std::string& pin, const std::string& confirmPin, int step){
+void printRegisterScreen(const std::string& fName, const std::string& lName, const std::string& bday, const std::string& contact, const std::string& deposit, int step){
     head(); 
-    printRegisterScreen1(fName, lName, bday, contact, deposit, pin, confirmPin, step);
+    printRegisterScreen1(fName, lName, bday, contact, deposit, step);
     withoutCard();
 }
 void printMainMenuInsertCard(){
@@ -147,12 +138,6 @@ void printFundTransfer(const std::string& accStr, const std::string& amountStr, 
     withCard();
 }
 
-void printChangePinEnter(){
-    head();
-    printEnterPinCode();
-    withCard();
-}
-
 void printChangePinConfirmation(const std::string& oldPin, const std::string& newPin, const std::string& confirmPin, int step){
     head();
     printChangePinCode1(oldPin, newPin, confirmPin, step); 
@@ -193,17 +178,6 @@ std::string getRealTimeInput(std::function<void(const std::string&)> drawFunctio
     return input;
 }
 
-void printLoadingScreen(){
-    char spinner[] = {'|', '/', '-', '\\'};
-    std::cout << "Loading ";
-    for (int i = 0; i < 20; ++i) {
-        std::cout << spinner[i % 4] << "\b";
-        std::cout.flush();
-        SLEEP_MS(150);
-    }
-    std::cout << "Done! \n";
-}
-
 void printMainMenu1(){
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
@@ -236,8 +210,7 @@ void printMainMenu2(){
 
 void printRegisterScreen1(const std::string& fName, const std::string& lName, 
                            const std::string& bday, const std::string& contact, 
-                           const std::string& deposit, const std::string& pin, 
-                           const std::string& confirmPin, int step) {
+                           const std::string& deposit, int step) {
                            
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
     std::cout << "|      |              REGISTRATION               |      |" << std::endl;
@@ -618,7 +591,6 @@ void printResult1(TransactionStatus status){
         case TransactionStatus::SUCCESS:                   { message = "TRANSACTION SUCCESSFUL"; break; }
         case TransactionStatus::FAILED:                    { message = "TRANSACTION FAILED"; break; }
         case TransactionStatus::INSUFFICIENT_FUNDS:        { message = "TRANSACTION FAILED: INSUFFICIENT FUNDS"; break; }
-        case TransactionStatus::BELOW_MAINTAINING_BALANCE: { message = "TRANSACTION FAILED: INSUFFICIENT BALANCE"; break; }
         case TransactionStatus::INVALID_AMOUNT:            { message = "TRANSACTION FAILED: INVALID AMOUNT"; break; }
         case TransactionStatus::RECIPIENT_NOT_FOUND:       { message = "TRANSACTION FAILED: RECIPIENT NOT FOUND"; break; }
         case TransactionStatus::PIN_MISMATCH:              { message = "PIN DO NOT MATCH"; break; }
@@ -626,10 +598,6 @@ void printResult1(TransactionStatus status){
         case TransactionStatus::INVALID_PIN_FORMAT:        { message = "INVALID PIN FORMAT"; break; }
         case TransactionStatus::PIN_REUSED:                { message = "PIN CANNOT BE REUSED"; break; }
         case TransactionStatus::CANCELLED:                 { message = "TRANSACTION CANCELLED"; break; }
-        case TransactionStatus::ACCOUNT_LOCKED:            { message = "ACCOUNT IS LOCKED"; break; }
-        case TransactionStatus::ACCOUNT_TERMINATED:        { message = "ACCOUNT IS TERMINATED"; break; }
-        case TransactionStatus::REGISTRATION_SUCCESS:      { message = "REGISTRATION SUCCESSFUL. ATM CARD LINKED"; break; }
-        case TransactionStatus::CARD_ALREADY_LINKED:       { message = "YOUR ATM CARD ALREADY HAS AN ACCOUNT"; break; }
         default:                                           { message = "UNKNOWN TRANSACTION ERROR"; break; }
     }
 
@@ -640,7 +608,7 @@ void printResult1(TransactionStatus status){
     std::cout << "|      +-----------------------------------------+      |\n";
     std::cout << "|      |                                         |      |\n";
     std::cout << "|      |                                         |      |\n";
-    std::cout << "|  [1] |" << std::string(left, '  ') << message << std::string(right, '  ') << "| [5]  |\n";
+    std::cout << "|  [1] |" << std::string(left, ' ') << message << std::string(right, ' ') << "| [5]  |\n";
     std::cout << "|      |                                         |      |\n";
 }
 
@@ -695,17 +663,6 @@ void incorrectAttempts(int attempts){
     std::cout << "|  [4] |                                         | [8]  |" << std::endl;
     std::cout << "|      |                                         |      |" << std::endl;
     std::cout << "|      +-----------------------------------------+      |" << std::endl;
-}
-
-int countIntegerDigits(int num) {
-    if (num == 0) return 1;
-    
-    int count = 0;
-    while (num != 0) {
-        num /= 10; 
-        count++;
-    }
-    return count;
 }
 
 #endif

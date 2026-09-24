@@ -18,7 +18,6 @@ enum class AuthStatus {
     INVALID_PIN_FORMAT,
     ACCOUNT_NOT_FOUND,
     WRONG_PIN,
-    LOCKED_OUT,
     ACCOUNT_LOCKED,
     ACCOUNT_TERMINATED,
     CARD_ALREADY_LINKED,
@@ -34,11 +33,11 @@ bool writeCardFile(int accNumber, unsigned long pinHash) {
     return true;
 }
 
-// Read accNumber and pinHash from the pin.code file
-bool readCardFile(int& accNumber, unsigned long& pinHash) {
+// Read the account number from the card file.
+bool readCardFile(int& accNumber) {
     std::ifstream file(CARD_FILE_PATH);
     if (!file.is_open()) return false;
-    file >> accNumber >> pinHash;
+    file >> accNumber;
     file.close();
     return true;
 }
@@ -46,8 +45,7 @@ bool readCardFile(int& accNumber, unsigned long& pinHash) {
 // Check if the card already has an account linked to it
 bool cardIsLinked(AccountList& list) {
     int accNum = 0;
-    unsigned long pinHash = 0;
-    if (!readCardFile(accNum, pinHash)) return false;
+    if (!readCardFile(accNum)) return false;
     return list.findByAccountNumber(accNum) != NULL;
 }
 
@@ -80,8 +78,7 @@ AuthStatus registerAccount(AccountList& list,
 AuthStatus login(AccountList& list, const std::string& pin, Account*& loggedInAccount) {
     // read card file
     int accNum = 0;
-    unsigned long cardPinHash = 0;
-    if (!readCardFile(accNum, cardPinHash)) return AuthStatus::ACCOUNT_NOT_FOUND;
+    if (!readCardFile(accNum)) return AuthStatus::ACCOUNT_NOT_FOUND;
 
     // find acc (accNum)
     Account* acc = list.findByAccountNumber(accNum);

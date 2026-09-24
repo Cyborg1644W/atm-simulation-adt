@@ -41,12 +41,11 @@ void mainMenu(AccountList& list) {
         // --- CARD DETECTED ---
         // Check if this card already has an account (has a valid accNumber inside)
         int cardAccNum = 0;
-        unsigned long cardPinHash = 0;
-        bool cardHasAccount = readCardFile(cardAccNum, cardPinHash)
+        bool cardHasAccount = readCardFile(cardAccNum)
                               && list.findByAccountNumber(cardAccNum) != NULL;
 
-        if (!cardHasAccount) { //dito may changes
-            printRegisterScreen("", "", "", "", "", "", "", -1); 
+        if (!cardHasAccount) {
+            printRegisterScreen("", "", "", "", "", -1);
             char choice = getch();
     
             if (choice == '0' || choice == 'o' || choice == 'O') {
@@ -56,27 +55,27 @@ void mainMenu(AccountList& list) {
             std::string firstName, lastName, birthday, contact, depositStr, pin, confirmPin;
 
             firstName = getRealTimeInput([&](const std::string& input){
-                printRegisterScreen(input, "", "", "", "", "", "", 0);
+                printRegisterScreen(input, "", "", "", "", 0);
             });
             if (firstName == "0") continue;
 
             lastName = getRealTimeInput([&](const std::string& input){
-                printRegisterScreen(firstName, input, "", "", "", "", "", 1);
+                printRegisterScreen(firstName, input, "", "", "", 1);
             });
             if (lastName == "0") continue;
 
             birthday = getRealTimeInput([&](const std::string& input){
-                printRegisterScreen(firstName, lastName, input, "", "", "", "", 2);
+                printRegisterScreen(firstName, lastName, input, "", "", 2);
             });
             if (birthday == "0") continue;
 
             contact = getRealTimeInput([&](const std::string& input){
-                printRegisterScreen(firstName, lastName, birthday, input, "", "", "", 3);
+                printRegisterScreen(firstName, lastName, birthday, input, "", 3);
             });
             if (contact == "0") continue;
 
             depositStr = getRealTimeInput([&](const std::string& input){
-                printRegisterScreen(firstName, lastName, birthday, contact, input, "", "", 4);
+                printRegisterScreen(firstName, lastName, birthday, contact, input, 4);
             });
             if (depositStr == "0") continue;
 
@@ -110,8 +109,7 @@ void mainMenu(AccountList& list) {
 
             if (result == AuthStatus::SUCCESS) {
                 int newNum = 0;
-                unsigned long newHash = 0;
-                readCardFile(newNum, newHash);
+                readCardFile(newNum);
         
                 printRegistrationSuccess(newNum); 
                 saveAccounts(list);               
@@ -278,7 +276,7 @@ void transactionMenu(Account* currentAccount, AccountList& list) {
                     double amount = 0;
                     try { amount = std::stod(amountStr); } catch(...) {}
                     
-                    status = transfer(*currentAccount, list, accNum, "", amount, pinStr);
+                    status = transfer(*currentAccount, list, accNum, amount, pinStr);
                 }
                 printResult(status, anotherTransaction);
 

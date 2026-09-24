@@ -23,8 +23,4 @@ void lockAccount(Account& acc){
     acc.status = AccountStatus::LOCKED;
 }
 
-void terminateAccount(Account& acc){
-    acc.status = AccountStatus::TERMINATED;
-}
-
 #endif
